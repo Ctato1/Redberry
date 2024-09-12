@@ -12,7 +12,9 @@ import { HeaderComponent } from './shared/header/header.component';
 
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MegaMenuModule} from "primeng/megamenu";
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,8 +29,9 @@ import {MegaMenuModule} from "primeng/megamenu";
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MegaMenuModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    InputTextModule,
+    DropdownModule
   ],
   providers: [],
   bootstrap: [AppComponent]

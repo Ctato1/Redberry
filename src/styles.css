@@ -12,41 +12,44 @@
   box-sizing: border-box;
   font-family: FiraGO, "sans-serif";
 }
-body{
-  overflow-x:hidden;
+
+body {
+  overflow-x: hidden;
 }
 
-.primary-button{
+.primary-button {
   background: #F93B1D;
-  color:#fff;
+  color: #fff;
   padding: 10px;
   align-items: center;
   border-radius: 10px;
   font-size: 1rem;
-  border:none;
+  border: none;
 }
 
-.filter-btn{
+.filter-btn {
   padding: 8px 14px;
-  background-color:transparent;
-  border:none;
+  background-color: transparent;
+  border: none;
   font-weight: 500;
   color: #021526;
   transition: .3s ease-in-out;
 }
-.filter-btn:hover{
+
+.filter-btn:hover {
   border-radius: 6px;
-  background-color:#F3F3F3;
-  border:none;
+  background-color: #F3F3F3;
+  border: none;
   font-weight: 500;
   color: #021526;
 }
+
 .filter-act-btn {
   padding: 8px 14px;
-  border:none;
+  border: none;
   font-weight: 500;
   color: #021526;
   transition: .3s ease-in-out;
   border-radius: 6px;
-  background-color:#F3F3F3;
+  background-color: #F3F3F3;
 }

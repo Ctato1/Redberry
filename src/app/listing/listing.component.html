@@ -1,2 +1,54 @@
 <app-header></app-header>
-<p>listing works!</p>
+
+<div class="listing">
+  <div class="row">
+    <div class="my-5">
+      <h2 class="text-center main-linting-title">ლისტინგის დამატება</h2>
+    </div>
+  </div>
+
+  <form [formGroup]="listingForm" (ngSubmit)="onSubmit()">
+    <h5>გარიგების ტიპი</h5>
+    <div class="radio-section">
+      <label *ngFor="let type of types">
+        <input
+          type="radio"
+          formControlName="types"
+          [value]="type"/>
+        {{ type }}
+      </label>
+    </div>
+
+    <h5 class="my-5">მდებარეობა</h5>
+    <div class="location">
+      <div class="location-item">
+        <label for="address">მისამართი *</label>
+        <input
+          pInputText
+          id="address"
+          aria-describedby="username-help"
+        />
+        <small id="address-help">
+          <img src="/assets/done.svg" alt="done">
+          მინიმუმ ორი სიმბოლო
+        </small>
+      </div>
+      <div class="location-item">
+        <label for="zip">საფოსტო ინდექსი *</label>
+        <input
+          type="number"
+          pInputText
+          id="zip"
+          aria-describedby="zip-help"
+        />
+        <small id="zip-help">
+          <img src="/assets/done.svg" alt="done">
+          მხოლოდ რიცხვები
+        </small>
+      </div>
+
+
+    </div>
+
+  </form>
+</div>

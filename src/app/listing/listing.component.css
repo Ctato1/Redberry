@@ -1,0 +1,99 @@
+/* for PrimeNg */
+:host ::ng-deep p-dropdown ul{
+  padding: 0 !important;
+  margin: 0;
+}
+
+/*:host ::ng-deep p-dropdown {*/
+/*  color: lightblue !important;*/
+/*}*/
+
+/*:host ::ng-deep p-dropdown {*/
+/*  color: purple !important;*/
+/*  padding: 0;*/
+/*}*/
+
+/*:host ::ng-deep p-dropdown  {*/
+/*  padding-top: 0;*/
+/*  padding-left: 0;*/
+/*  padding-bottom: 0;*/
+/*  margin: 0;*/
+/*  background-color: orange !important;*/
+/*}*/
+
+/*:host ::ng-deep p-dropdown  {*/
+/*  color: green !important;*/
+/*}*/
+
+/*:host ::ng-deep p-dropdown :hover {*/
+/*  background-color: red !important;*/
+/*  padding: 0;*/
+/*}*/
+
+/*:host ::ng-deep .dropdown:not(.p-disabled).p-focus {*/
+/*  border: 1px solid #c1c1c1 !important;*/
+/*  outline: transparent;*/
+/*  box-shadow: none;*/
+
+/*}*/
+
+/**/
+.main-linting-title{
+  color: #021526;
+  font-size: 2rem;
+  font-weight: 500;
+}
+.radio-section{
+  display:flex;
+  align-items:center;
+  gap: 32px;
+}
+.radio-section label{
+  display:flex;
+  align-items:center;
+  gap: 7px;
+}
+.radio-section input{
+  width: 14px;
+  height: 14px;
+}
+/* location section */
+.location {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+  margin: 0 auto;
+}
+.listing{
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 30px;
+
+}
+
+
+/* Default layout: 2 columns, 2 rows */
+@media screen and (min-width: 768px) {
+  .location {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+}
+
+/* Responsive layout: 1 column, 4 rows */
+@media screen and (max-width: 767px) {
+  .location {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+  }
+}
+
+/* Styles for inputs and selects */
+.location input,
+.location select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}

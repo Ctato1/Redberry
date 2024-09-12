@@ -12,8 +12,14 @@ import {FilterService, RegionProps} from "../shared/filter.service";
 })
 export class HomeComponent implements OnInit, OnDestroy {
   filterSelected: boolean = false;
+  // select buttons flags
   regionFilter: boolean = false;
+  priceFilter: boolean = false;
+
+  // for fetching
   subscription!: Subscription;
+
+  // data
   regions: RegionProps[] = [];
 
   myForm = this.fb.group({

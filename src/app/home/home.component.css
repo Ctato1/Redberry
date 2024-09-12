@@ -4,6 +4,15 @@ input[type="checkbox"] {
   accent-color: rgba(69, 168, 73, 1); /* Change this to your desired color */
 }
 
+.filter-section{
+  display:flex;
+  border-radius: 10px;
+  border: 1px solid #DBDBDB;
+  background: transparent;
+  padding: 6px;
+  gap: 24px;
+}
+
 .first-filter{
   position:relative;
 }

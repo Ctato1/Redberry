@@ -1,0 +1,15 @@
+header{
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 30px;
+
+}
+img{
+  padding: 38px 0 ;
+}
+.line{
+  width: 100vw;
+  height: 1px;
+  background: #DBDBDB;
+}
+

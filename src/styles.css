@@ -1,9 +1,52 @@
-/*fonts*/
+/* PrimeNG theme and core CSS */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+/* Fonts */
 @import url("https://free.bboxtype.com/embedfonts/?family=FiraGO:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i");
 
-*{
+/* Global Styles */
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: FiraGO,"sans-serif";
+  font-family: FiraGO, "sans-serif";
+}
+body{
+  overflow-x:hidden;
+}
+
+.primary-button{
+  background: #F93B1D;
+  color:#fff;
+  padding: 10px;
+  align-items: center;
+  border-radius: 10px;
+  font-size: 1rem;
+  border:none;
+}
+
+.filter-btn{
+  padding: 8px 14px;
+  background-color:transparent;
+  border:none;
+  font-weight: 500;
+  color: #021526;
+  transition: .3s ease-in-out;
+}
+.filter-btn:hover{
+  border-radius: 6px;
+  background-color:#F3F3F3;
+  border:none;
+  font-weight: 500;
+  color: #021526;
+}
+.filter-act-btn {
+  padding: 8px 14px;
+  border:none;
+  font-weight: 500;
+  color: #021526;
+  transition: .3s ease-in-out;
+  border-radius: 6px;
+  background-color:#F3F3F3;
 }

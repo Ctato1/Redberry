@@ -8,13 +8,18 @@ import {HttpClientModule} from "@angular/common/http";
 import { HomeComponent } from './home/home.component';
 import { PropertyComponent } from './property/property.component';
 import { ListingComponent } from './listing/listing.component';
+import { HeaderComponent } from './shared/header/header.component';
 
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MegaMenuModule} from "primeng/megamenu";
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     PropertyComponent,
-    ListingComponent
+    ListingComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -22,6 +27,8 @@ import { ListingComponent } from './listing/listing.component';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    MegaMenuModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -18,6 +18,9 @@ export class ListingComponent implements OnInit {
   allCities: CitiesProps[] = [];
   chosenCity: CitiesProps[] = [];
 
+  imgURL: string | any | null = null;  // To store the image URL for preview
+  errorMessage: string = '';  // To store error messages if file is too large
+
 
   constructor(private filterService: FilterService) {
   }
@@ -54,7 +57,6 @@ export class ListingComponent implements OnInit {
     })
     this.filterService.getCities().subscribe((cities: CitiesProps[]) => {
       this.allCities = cities;
-      console.log(cities)
     })
   }
 
@@ -65,5 +67,41 @@ export class ListingComponent implements OnInit {
 
   onSubmit() {
     console.log(this.listingForm)
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+
+      // (1 MB = 1024 1024000)
+      if (file.size > 1024000) {
+        this.errorMessage = 'File size exceeds 1 MB. Please select a smaller image.';
+        this.imgURL = null; // Clear the previous image preview if the new file is too large
+        return;
+      }
+
+      const reader = new FileReader();
+
+      // When the file is loaded, set the imgURL to be the result for the preview
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        this.listingForm.get('details.photo')?.setValue(reader.result)
+        this.imgURL = e.target?.result;
+        this.errorMessage = '';  // Clear any previous error messages
+      };
+
+      reader.readAsDataURL(file);  // Reads the file as a data URL (base64 string)
+    }
+  }
+  clearSelectedFile(): void {
+    this.imgURL = null;  // Clear the image preview
+    this.listingForm.get('details.photo')?.setValue(null);  // Clear the form control value
+
+    // reset the file input value
+    const fileInput = document.getElementById('imgInp') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';  // clear the file input value
+    }
   }
 }

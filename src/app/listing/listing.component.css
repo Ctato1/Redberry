@@ -20,28 +20,33 @@
 
 :host ::ng-deep .custom-dropdown .p-dropdown-panel .p-dropdown-item {
   padding: 0.5rem;
-  border-bottom:1px solid grey;
+  border-bottom: 1px solid grey;
 }
+
 /*  */
-.main-linting-title{
+.main-linting-title {
   color: #021526;
   font-size: 2rem;
   font-weight: 500;
 }
-.radio-section{
-  display:flex;
-  align-items:center;
+
+.radio-section {
+  display: flex;
+  align-items: center;
   gap: 32px;
 }
-.radio-section label{
-  display:flex;
-  align-items:center;
+
+.radio-section label {
+  display: flex;
+  align-items: center;
   gap: 7px;
 }
-.radio-section input{
+
+.radio-section input {
   width: 14px;
   height: 14px;
 }
+
 /* location section */
 .listing {
   max-width: 1000px;
@@ -84,6 +89,14 @@
 .full-width {
   grid-column: 1 / -1;
 }
+
+img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+}
+
+/* textarea  */
 textarea#description {
   width: 100%;
   padding: 10px;
@@ -106,6 +119,58 @@ textarea#description::placeholder {
   color: #999;
 }
 
+/* image mask */
+
+.image-mask {
+  border-radius: 8px;
+  border: 1px dashed #2D3648;
+  height: 120px;
+  background: #FFF;
+  padding: 20px;
+  position:relative;
+}
+
+input[type="file"] {
+  display: none; /* Hide the default input */
+}
+
+.custom-file-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  position: relative;
+}
+
+.custom-upload-icon {
+  font-size: 2em;
+  color: #777;
+}
+
+.custom-file-label:hover {
+  border-color: #aaa; /* Change border color on hover */
+}
+
+img#blah {
+  width: 100px;
+  height: 82px;
+  border-radius: 8px;
+  object-fit: cover; /* Ensure the image covers the entire area */
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.bin-img{
+  position: absolute;
+  top: 60%;
+  left: 55%;
+}
+
+
 /* Default layout: 2 columns, 2 rows */
 @media screen and (min-width: 768px) {
   .location {
@@ -124,7 +189,7 @@ textarea#description::placeholder {
 
 /* Styles for inputs and selects */
 .location input,
-.location select{
+.location select {
   width: 100%;
   padding: 0.5rem;
   border: 1px solid #ccc;

@@ -142,7 +142,22 @@
         </small>
       </div>
 
+      <div class="full-width image-mask">
+        <label class="custom-file-label" for="imgInp">
+          <img src="assets/plus.svg" alt="plus icon">
+        </label>
+        <input accept="image/*" type="file" id="imgInp" (change)="onFileSelected($event)" />
+        <img id="blah" [src]="imgURL" alt="your image" *ngIf="imgURL" />
+
+        <!-- Delete button to clear the selected image -->
+        <img src="assets/bin.svg" alt="recycle bin" class="bin-img" *ngIf="imgURL" (click)="clearSelectedFile()"/>
+
+        <p style="color: red;" *ngIf="errorMessage">{{ errorMessage }}</p>
+      </div>
+
+
     </div>
+
 
     <button class="primary-button">Submit</button>
   </form>

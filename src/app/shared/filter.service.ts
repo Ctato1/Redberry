@@ -1,7 +1,14 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {catchError, throwError} from "rxjs";
 
+
+export interface AgentProps {
+  id: number | null,
+  name: string,
+  surname?: string,
+  avatar?: string
+}
 
 export interface RegionProps {
   id: number;
@@ -19,15 +26,4 @@ export interface CitiesProps {
 })
 export class FilterService {
 
-  constructor(private http: HttpClient) {
-  }
-
-
-  getRegions() {
-    return this.http.get<RegionProps[]>('https://api.real-estate-manager.redberryinternship.ge/api/regions').pipe(catchError(errorRes => throwError(errorRes)))
-  }
-
-  getCities() {
-    return this.http.get<CitiesProps[]>('https://api.real-estate-manager.redberryinternship.ge/api/cities').pipe(catchError(errorRes => throwError(errorRes)))
-  }
 }

@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Subscription } from "rxjs";
 import { FormBuilder, FormArray, FormControl } from "@angular/forms";
 import {FilterService, RegionProps} from "../shared/filter.service";
+import {GeographicalInformationService} from "../apimodels";
 
 
 @Component({
@@ -26,10 +27,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     selectedRegions: this.fb.array([])
   });
 
-  constructor(private http: HttpClient, private fb: FormBuilder,private filterService:FilterService) {}
+  constructor(private http: HttpClient, private fb: FormBuilder,private geographicalInformationService: GeographicalInformationService) {}
 
   ngOnInit() {
-    this.subscription = this.filterService.getRegions()
+    this.subscription = this.geographicalInformationService.regionsGet()
       .subscribe((res: RegionProps[]) => {
         this.regions = res;
         this.loadSavedRegions();

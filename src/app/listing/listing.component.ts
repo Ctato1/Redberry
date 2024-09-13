@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
-import {CitiesProps, FilterService, RegionProps} from "../shared/filter.service";
+import {AgentProps, CitiesProps, FilterService, RegionProps} from "../shared/filter.service";
+import {AgentsService, GeographicalInformationService} from "../apimodels";
 
 @Component({
   selector: 'app-listing',
@@ -14,18 +15,22 @@ export class ListingComponent implements OnInit {
 
   listingForm!: FormGroup;
 
+  // for dropdowns
   regions: RegionProps[] = [];
   allCities: CitiesProps[] = [];
   chosenCity: CitiesProps[] = [];
+  agents: AgentProps[] = [];
+  selectedAgent: any;
 
   imgURL: string | any | null = null;  // To store the image URL for preview
   errorMessage: string = '';  // To store error messages if file is too large
 
 
-  constructor(private filterService: FilterService) {
+  constructor(private filterService: FilterService, private agentService: AgentsService, private geographicalInformationService: GeographicalInformationService) {
   }
 
   ngOnInit() {
+
     this.fetchData();
     this.initForm();
   }
@@ -52,21 +57,28 @@ export class ListingComponent implements OnInit {
 
   fetchData() {
     // get Regions
-    this.filterService.getRegions().subscribe((regions: RegionProps[]) => {
+    this.geographicalInformationService.regionsGet().subscribe(regions => {
+      console.log(regions)
       this.regions = regions;
     })
-    this.filterService.getCities().subscribe((cities: CitiesProps[]) => {
+    // get cities
+    this.geographicalInformationService.citiesGet().subscribe(cities => {
       this.allCities = cities;
     })
+    // get agents
+    this.agentService.agentsGet().subscribe(agents => {
+      this.agents = [{name: 'Add Agent', id: null}, ...agents];
+    });
   }
 
-  changeCities() {
-    const currentRegionId:number = this.listingForm.get('location.region')?.value?.id;
-    this.chosenCity = this.allCities.filter((item:CitiesProps) => item.region_id === currentRegionId);
-  }
 
   onSubmit() {
     console.log(this.listingForm)
+  }
+
+  changeCities() {
+    const currentRegionId: number = this.listingForm.get('location.region')?.value?.id;
+    this.chosenCity = this.allCities.filter((item: CitiesProps) => item.region_id === currentRegionId);
   }
 
   onFileSelected(event: Event): void {
@@ -94,6 +106,7 @@ export class ListingComponent implements OnInit {
       reader.readAsDataURL(file);  // Reads the file as a data URL (base64 string)
     }
   }
+
   clearSelectedFile(): void {
     this.imgURL = null;  // Clear the image preview
     this.listingForm.get('details.photo')?.setValue(null);  // Clear the form control value
@@ -104,4 +117,19 @@ export class ListingComponent implements OnInit {
       fileInput.value = '';  // clear the file input value
     }
   }
+
+  onAgentChange(event: any) {
+    this.selectedAgent = event.value;
+    console.log(this.listingForm.get('agent')?.value?.id === null)
+    // check if Agent is selected
+    if (this.listingForm.get('agent')?.value?.id === null) {
+      console.log('Adding another agent');
+      this.selectedAgent.id = null;
+    }
+  }
+
+  onHandleError() {
+    this.selectedAgent.id = 9;
+  }
+
 }

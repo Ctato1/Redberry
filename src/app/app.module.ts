@@ -14,6 +14,7 @@ import { HeaderComponent } from './shared/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
+import { AddAgentComponent } from './shared/add-agent/add-agent.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { DropdownModule } from 'primeng/dropdown';
     HomeComponent,
     PropertyComponent,
     ListingComponent,
-    HeaderComponent
+    HeaderComponent,
+    AddAgentComponent
   ],
   imports: [
     BrowserModule,

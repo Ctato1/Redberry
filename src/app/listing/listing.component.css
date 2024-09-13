@@ -170,6 +170,11 @@ img#blah {
   left: 55%;
 }
 
+/* agent */
+.agent-item{
+  width: 49%;
+}
+
 
 /* Default layout: 2 columns, 2 rows */
 @media screen and (min-width: 768px) {
@@ -184,6 +189,9 @@ img#blah {
   .location {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto auto;
+  }
+  .agent-item{
+    width: 100%;
   }
 }
 

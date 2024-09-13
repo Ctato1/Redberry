@@ -146,8 +146,8 @@
         <label class="custom-file-label" for="imgInp">
           <img src="assets/plus.svg" alt="plus icon">
         </label>
-        <input accept="image/*" type="file" id="imgInp" (change)="onFileSelected($event)" />
-        <img id="blah" [src]="imgURL" alt="your image" *ngIf="imgURL" />
+        <input accept="image/*" type="file" id="imgInp" (change)="onFileSelected($event)"/>
+        <img id="blah" [src]="imgURL" alt="your image" *ngIf="imgURL"/>
 
         <!-- Delete button to clear the selected image -->
         <img src="assets/bin.svg" alt="recycle bin" class="bin-img" *ngIf="imgURL" (click)="clearSelectedFile()"/>
@@ -158,7 +158,28 @@
 
     </div>
 
+    <!--  agent property  -->
+    <h5 class="mt-5 mb-2">აგენტი</h5>
+    <div class="agent-item mb-5">
+      <label for="agent" class="mb-1">აირჩიე</label>
+      <p-dropdown
+        id="agent"
+        [options]="agents"
+        optionLabel="name"
+        placeholder="აირჩიეთ აგენტი"
+        [style]="{'width':'100%'}"
+        styleClass="custom-dropdown"
+        (onChange)="onAgentChange($event)"
+        formControlName="agent"
+      ></p-dropdown>
+    </div>
+
 
     <button class="primary-button">Submit</button>
   </form>
 </div>
+<!--<app-add-agent-->
+<!--  [message]="'dsafasfasf'"-->
+<!--  *ngIf="selectedAgent?.id == null"-->
+<!--  (close)="onHandleError()"-->
+<!--&gt;</app-add-agent>-->

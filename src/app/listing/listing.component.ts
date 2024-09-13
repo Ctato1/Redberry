@@ -15,7 +15,7 @@ export class ListingComponent implements OnInit {
   listingForm!: FormGroup;
 
   regions: RegionProps[] = [];
-  allcities: CitiesProps[] = [];
+  allCities: CitiesProps[] = [];
   chosenCity: CitiesProps[] = [];
 
 
@@ -53,14 +53,14 @@ export class ListingComponent implements OnInit {
       this.regions = regions;
     })
     this.filterService.getCities().subscribe((cities: CitiesProps[]) => {
-      this.allcities = cities;
+      this.allCities = cities;
       console.log(cities)
     })
   }
 
   changeCities() {
     const currentRegionId:number = this.listingForm.get('location.region')?.value?.id;
-    this.chosenCity = this.allcities.filter((item:CitiesProps) => item.region_id === currentRegionId);
+    this.chosenCity = this.allCities.filter((item:CitiesProps) => item.region_id === currentRegionId);
   }
 
   onSubmit() {

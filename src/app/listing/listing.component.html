@@ -19,6 +19,7 @@
       </label>
     </div>
 
+    <!--  location property  -->
     <h5 class="my-5">მდებარეობა</h5>
     <div class="location" formGroupName="location">
       <div class="location-item">
@@ -75,6 +76,72 @@
 
         ></p-dropdown>
       </div>
+    </div>
+
+    <!--  apartment property  -->
+    <h5 class="my-5">ბინის დეტალები</h5>
+    <div class="location" formGroupName="details">
+      <div class="location-item">
+        <label for="price">ფასი</label>
+        <input
+          type="number"
+          pInputText
+          id="price"
+          aria-describedby="price-help"
+          formControlName="price"
+        />
+        <small id="price-help">
+          <img src="/assets/done.svg" alt="done">
+          მხოლოდ რიცხვები
+        </small>
+      </div>
+      <div class="location-item">
+        <label for="zip">ფართობი</label>
+        <input
+          type="number"
+          pInputText
+          id="area"
+          aria-describedby="area-help"
+          formControlName="area"
+        />
+        <small id="area-help">
+          <img src="/assets/done.svg" alt="done">
+          მხოლოდ რიცხვები
+        </small>
+      </div>
+      <div class="location-item">
+        <label for="zip">საძინებლების რაოდენობა *</label>
+        <input
+          type="number"
+          pInputText
+          id="bedroom"
+          aria-describedby="bedroom-help"
+          formControlName="bedroom"
+        />
+        <small id="bedroom-help">
+          <img src="/assets/done.svg" alt="done">
+          მხოლოდ რიცხვები
+        </small>
+      </div>
+
+
+      <div class="location-item full-width">
+        <label for="description">აღწერა *</label>
+        <textarea
+          pInputTextarea
+          placeholder="შეიყვანეთ აღწერა"
+          id="description"
+          rows="5"
+          aria-describedby="description-help"
+          formControlName="description"
+        ></textarea>
+
+        <small id="description-help">
+          <img src="/assets/done.svg" alt="done">
+          მინიმუმ 5 სიტყვა
+        </small>
+      </div>
+
     </div>
 
     <button class="primary-button">Submit</button>

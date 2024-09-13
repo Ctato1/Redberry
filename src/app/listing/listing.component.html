@@ -20,13 +20,14 @@
     </div>
 
     <h5 class="my-5">მდებარეობა</h5>
-    <div class="location">
+    <div class="location" formGroupName="location">
       <div class="location-item">
         <label for="address">მისამართი *</label>
         <input
           pInputText
           id="address"
           aria-describedby="username-help"
+          formControlName="address"
         />
         <small id="address-help">
           <img src="/assets/done.svg" alt="done">
@@ -40,15 +41,42 @@
           pInputText
           id="zip"
           aria-describedby="zip-help"
+          formControlName="zip"
         />
         <small id="zip-help">
           <img src="/assets/done.svg" alt="done">
           მხოლოდ რიცხვები
         </small>
       </div>
+      <div class="location-item">
+        <label for="city" class="mb-1">რაიონი *</label>
+        <p-dropdown
+          id="city"
+          [options]="regions"
+          optionLabel="name"
+          placeholder="აირჩიეთ რაიონი"
+          [style]="{'width':'100%'}"
+          styleClass="custom-dropdown"
+          formControlName="region"
+          (onChange)="changeCities()"
+        ></p-dropdown>
+      </div>
 
+      <div class="location-item" *ngIf="listingForm.get('location.region')?.valid">
+        <label for="district" class="mb-1">ქალაქი *</label>
+        <p-dropdown
+          id="district"
+          [options]="chosenCity"
+          optionLabel="name"
+          placeholder="აირჩიეთ ქალაქი"
+          [style]="{'width':'100%'}"
+          styleClass="custom-dropdown"
+          formControlName="city"
 
+        ></p-dropdown>
+      </div>
     </div>
 
+    <button class="primary-button">Submit</button>
   </form>
 </div>

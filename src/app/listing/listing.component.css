@@ -1,42 +1,27 @@
 /* for PrimeNg */
-:host ::ng-deep p-dropdown ul{
-  padding: 0 !important;
-  margin: 0;
+
+:host ::ng-deep .custom-dropdown .p-dropdown {
+  width: 100%;
 }
 
-/*:host ::ng-deep p-dropdown {*/
-/*  color: lightblue !important;*/
-/*}*/
+:host ::ng-deep .custom-dropdown .p-dropdown-label {
+  padding: 0.5rem;
+}
 
-/*:host ::ng-deep p-dropdown {*/
-/*  color: purple !important;*/
-/*  padding: 0;*/
-/*}*/
+:host ::ng-deep .custom-dropdown .p-dropdown-trigger {
+  padding: 0 0.5rem;
+}
 
-/*:host ::ng-deep p-dropdown  {*/
-/*  padding-top: 0;*/
-/*  padding-left: 0;*/
-/*  padding-bottom: 0;*/
-/*  margin: 0;*/
-/*  background-color: orange !important;*/
-/*}*/
+:host ::ng-deep .custom-dropdown .p-dropdown-panel .p-dropdown-items {
+  padding: 0.5rem 0;
+  margin: 0;
 
-/*:host ::ng-deep p-dropdown  {*/
-/*  color: green !important;*/
-/*}*/
+}
 
-/*:host ::ng-deep p-dropdown :hover {*/
-/*  background-color: red !important;*/
-/*  padding: 0;*/
-/*}*/
-
-/*:host ::ng-deep .dropdown:not(.p-disabled).p-focus {*/
-/*  border: 1px solid #c1c1c1 !important;*/
-/*  outline: transparent;*/
-/*  box-shadow: none;*/
-
-/*}*/
-
+:host ::ng-deep .custom-dropdown .p-dropdown-panel .p-dropdown-item {
+  padding: 0.5rem 0;
+  border-bottom:1px solid grey;
+}
 /**/
 .main-linting-title{
   color: #021526;
@@ -68,7 +53,6 @@
   max-width: 1000px;
   margin: 0 auto;
   padding: 0 30px;
-
 }
 
 
@@ -90,7 +74,7 @@
 
 /* Styles for inputs and selects */
 .location input,
-.location select {
+.location select{
   width: 100%;
   padding: 0.5rem;
   border: 1px solid #ccc;

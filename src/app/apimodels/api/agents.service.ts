@@ -26,6 +26,7 @@ import {AgentsPost201Response} from '../model/agentsPost201Response';
 // @ts-ignore
 import {BASE_PATH, COLLECTION_FORMATS} from '../variables';
 import {Configuration} from '../configuration';
+import {environment} from "../../../enviroments/enviroment";
 
 
 @Injectable({
@@ -38,7 +39,7 @@ export class AgentsService {
   public configuration = new Configuration();
   public encoder: HttpParameterCodec;
 
-  readonly token: string = '9cff1a06-7a03-48b7-a4ac-4a86e3ee5398';
+  readonly token: string | undefined= environment.API_KEY;
 
   constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string | string[], @Optional() configuration: Configuration) {
     if (configuration) {

@@ -7,16 +7,47 @@
   background: rgba(0, 0, 0, 0.75);
   z-index: 50;
 }
-.alert-box{
+.alert-box {
   position: fixed;
-  top: 30vh;
-  left: 20vh;
-  width: 60vw;
-  padding: 10px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 1009px; /* Ensures the box never exceeds 1009px width */
+  height: auto; /* Allow the height to adjust based on content */
+  padding: 20px; /* You can adjust padding as needed */
   background: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   z-index: 100;
+  box-sizing: border-box; /* Ensure padding is included in the element's width and height */
 }
+
+
+
 .alert-box-actions{
   text-align: right;
+}
+/* Media query for larger screens, keeping the fixed size */
+@media (min-width: 1024px) {
+  .alert-box {
+    width: 709px;
+    height: 484px;
+  }
+}
+
+/* Media query for smaller screens (tablets) */
+@media (max-width: 1023px) {
+  .alert-box {
+    width: 90%; /* Adjust width to 90% of the viewport */
+    height: auto; /* Let height be dynamic */
+  }
+}
+
+/* Media query for mobile screens */
+@media (max-width: 768px) {
+  .alert-box {
+    width: 95%; /* Adjust width to 95% of the viewport */
+    height: auto; /* Let height be dynamic */
+    padding: 15px; /* Reduce padding for smaller screens */
+  }
 }

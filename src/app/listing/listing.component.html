@@ -14,8 +14,9 @@
         <input
           type="radio"
           formControlName="types"
-          [value]="type"/>
-        {{ type }}
+          [value]="type"
+        />
+        {{ type.name }}
       </label>
     </div>
 
@@ -178,8 +179,9 @@
     <button class="primary-button">Submit</button>
   </form>
 </div>
-<!--<app-add-agent-->
-<!--  [message]="'dsafasfasf'"-->
-<!--  *ngIf="selectedAgent?.id == null"-->
-<!--  (close)="onHandleError()"-->
-<!--&gt;</app-add-agent>-->
+<p-toast></p-toast>
+<app-add-agent
+  [message]="'dsafasfasf'"
+  *ngIf="selectedAgent == null"
+  (close)="onHandleClose()"
+></app-add-agent>

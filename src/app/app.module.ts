@@ -15,6 +15,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { AddAgentComponent } from './shared/add-agent/add-agent.component';
+import {MessageService} from "primeng/api";
+import {ToastModule} from "primeng/toast";
 
 @NgModule({
   declarations: [
@@ -33,9 +35,10 @@ import { AddAgentComponent } from './shared/add-agent/add-agent.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     InputTextModule,
-    DropdownModule
+    DropdownModule,
+    ToastModule,
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

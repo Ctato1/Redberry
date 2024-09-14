@@ -1,3 +1,4 @@
+/* Backdrop for the modal */
 .backdrop {
   position: fixed;
   top: 0;
@@ -8,47 +9,160 @@
   backdrop-filter: blur(5px);
   z-index: 50;
 }
+
+/* Alert box (modal) styling */
 .alert-box {
   position: fixed;
+  padding: 3rem; /* Increased padding for better spacing */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
-  max-width: 1009px; /* Ensures the box never exceeds 1009px width */
-  height: auto; /* Allow the height to adjust based on content */
-  padding: 20px; /* You can adjust padding as needed */
-  background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  max-width: 1009px;
+  height: auto;
+  background: #FFF;
+  border-radius: 10px;
+  box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
   z-index: 100;
-  box-sizing: border-box; /* Ensure padding is included in the element's width and height */
 }
 
-
-
-.alert-box-actions{
-  text-align: right;
+/* Form title styling */
+h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
 }
-/* Media query for larger screens, keeping the fixed size */
-@media (min-width: 1024px) {
-  .alert-box {
-    width: 709px;
-    height: 484px;
-  }
+
+/* Form layout and inputs */
+.form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+  gap: 1.5rem; /* Increased gap for better spacing */
+}
+
+.user-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-form label {
+  margin-bottom: 0.5rem;
+  color: #021526;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.user-form input, .user-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #808A93;
+  border-radius: 4px;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.user-form small {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.user-form small img {
+  margin-right: 7px;
+  margin-top: 1px;
+}
+
+.error-message {
+  color: #021526;
+}
+
+.success-message {
+  color: green;
+}
+
+/* Image mask (file upload area) */
+.image-mask {
+  grid-column: 1 / -1; /* Span both columns */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 120px;
+  border: 2px dashed #2D3648;
+  border-radius: 8px;
+  background-color: #F9F9F9;
+  position: relative;
+}
+
+input[type="file"] {
+  display: none; /* Hide the default file input */
+}
+
+.custom-file-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  color: #777;
+  font-size: 1.5rem;
+}
+
+.custom-file-label:hover {
+  border-color: #aaa; /* Change border color on hover */
+}
+
+/* Image preview styles */
+img#blah {
+  width: 100px;
+  height: 82px;
+  border-radius: 8px;
+  object-fit: cover; /* Ensure the image covers the area */
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.bin-img {
+  position: absolute;
+  top: 60%;
+  left: 55%;
+}
+
+/* Button section styling */
+.btn-section {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
 /* Media query for smaller screens (tablets) */
 @media (max-width: 1023px) {
   .alert-box {
     width: 90%; /* Adjust width to 90% of the viewport */
-    height: auto; /* Let height be dynamic */
+  }
+
+  .form {
+    grid-template-columns: 1fr; /* Stack inputs vertically */
   }
 }
 
 /* Media query for mobile screens */
 @media (max-width: 768px) {
   .alert-box {
-    width: 95%; /* Adjust width to 95% of the viewport */
-    height: auto; /* Let height be dynamic */
-    padding: 15px; /* Reduce padding for smaller screens */
+    width: 95%;
+    padding: 1.5rem;
+  }
+  .alert-box {
+    max-width: 900px;
+    height: 500px;
+    overflow:auto;
+  }
+  .form {
+    grid-template-columns: 1fr; /* Single column layout */
   }
 }

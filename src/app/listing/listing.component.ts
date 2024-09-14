@@ -71,7 +71,7 @@ export class ListingComponent implements OnInit {
     });
 
     this.agentService.agentsGet().subscribe((agents) => {
-      this.agents = [{ name: 'Add Agent', id: null }, ...agents]; // Add 'Add Agent' option
+      this.agents = [{ name: 'დაამატე აგენტი', id: null }, ...agents]; // Add 'Add Agent' option
       this.tryPatchForm(); // Check and patch form after agents are fetched
     });
   }

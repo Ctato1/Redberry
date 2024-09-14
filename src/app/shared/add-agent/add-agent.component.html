@@ -1,7 +1,94 @@
 <div class="backdrop" (click)="onClose()"></div>
 <div class="alert-box">
-  <p>{{message}}</p>
-  <div class="alert-box-actions">
-    <button class="btn btn-primary" (click)="onClose()">Close</button>
-  </div>
+  <h2 class="text-center">{{ message }}</h2>
+
+  <form [formGroup]="agentForm" (ngSubmit)="onSubmit()" class="form">
+    <div class="user-form">
+      <label for="name">სახელი *</label>
+      <input
+        pInputText
+        id="name"
+        aria-describedby="name-help"
+        [style]="{'width':'100%'}"
+        formControlName="name"
+      />
+      <small id="name-help"
+             [className]="agentForm.get('name')?.hasError('required') ||
+             agentForm.get('name')?.hasError('minlength')? 'error-message' : 'success-message'"
+      >
+        <img src="/assets/done.svg" alt="done"> მინიმუმ ორი სიმბოლო
+      </small>
+    </div>
+
+    <div class="user-form">
+      <label for="lastname">გვარი</label>
+      <input
+        pInputText
+        id="lastname"
+        aria-describedby="lastname-help"
+        [style]="{'width':'100%'}"
+        formControlName="lastname"
+      />
+      <small id="lastname-help"
+             [className]="agentForm.get('lastname')?.hasError('required') ||
+             agentForm.get('lastname')?.hasError('minlength') ? 'error-message' : 'success-message'"
+      >
+        <img src="/assets/done.svg" alt="done"> მინიმუმ ორი სიმბოლო
+      </small>
+    </div>
+
+    <div class="user-form">
+      <label for="email">ელ-ფოსტა *</label>
+      <input
+        pInputText
+        id="email"
+        aria-describedby="email-help"
+        [style]="{'width':'100%'}"
+        formControlName="email"
+      />
+      <small id="email-help"
+             [className]="agentForm.get('email')?.hasError('required') ||
+             agentForm.get('email')?.hasError('wrongEmail') ? 'error-message' : 'success-message'"
+      >
+        <img src="/assets/done.svg" alt="done"> {{ 'გამოიყენეთ @redberry.ge ფოსტა' }}
+      </small>
+    </div>
+
+
+    <div class="user-form">
+      <label for="phoneNumber">ტელეფონის ნომერი</label>
+      <input
+        pInputText
+        id="phoneNumber"
+        aria-describedby="number-help"
+        [style]="{'width':'100%'}"
+        formControlName="number"
+      />
+      <small id="number-help"
+             [className]="agentForm.get('number')?.hasError('required') ||
+             agentForm.get('number')?.hasError('pattern') ? 'error-message' : 'success-message'"
+      >
+        <img src="/assets/done.svg" alt="done"> მხოლოდ რიცხვები
+      </small>
+    </div>
+
+    <div class="full-width image-mask">
+      <label class="custom-file-label" for="imgInp">
+        <img src="assets/plus.svg" alt="plus icon">
+      </label>
+      <input accept="image/*" type="file" id="imgInp" (change)="onFileSelected($event)"/>
+      <img id="blah" [src]="imgURL" alt="your image" *ngIf="imgURL"/>
+
+      <!-- Delete button to clear the selected image -->
+      <img src="assets/bin.svg" alt="recycle bin" class="bin-img" *ngIf="imgURL" (click)="clearSelectedFile()"/>
+
+      <p style="color: red; font-size:.7rem;" *ngIf="errorMessage">{{ errorMessage }}</p>
+    </div>
+
+  </form>
+
+    <div class="btn-section d-flex align-items-end justify-content-end gap-3 flex-wrap">
+      <button class="secondary-button" (click)="onClose()">გაუქმება</button>
+      <button class="primary-button" [disabled]="!agentForm.valid" type="submit">დაამატე აგენტი</button>
+    </div>
 </div>

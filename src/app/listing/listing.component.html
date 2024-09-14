@@ -1,5 +1,5 @@
 <app-add-agent
-  [message]="'dsafasfasf'"
+  [message]="'აგენტის დამატება'"
   *ngIf="selectedAgent == null"
   (close)="onHandleClose()"
 ></app-add-agent>
@@ -52,6 +52,7 @@
           type="number"
           pInputText
           id="zip"
+          min="0"
           aria-describedby="zip-help"
           formControlName="zip"
         />
@@ -111,6 +112,7 @@
           type="number"
           pInputText
           id="price"
+          min="0"
           aria-describedby="price-help"
           formControlName="price"
         />
@@ -126,6 +128,8 @@
           type="number"
           pInputText
           id="area"
+          min="0"
+          max="250"
           aria-describedby="area-help"
           formControlName="area"
         />
@@ -142,6 +146,7 @@
           type="number"
           pInputText
           id="bedroom"
+          min="0"
           aria-describedby="bedroom-help"
           formControlName="bedroom"
         />
@@ -203,7 +208,7 @@
         formControlName="agent"
       >
         <ng-template let-agent pTemplate="item">
-          <span *ngIf="agent.id === null" class="d-flex align-items-center gap-3">
+          <span *ngIf="agent.id === null" class="d-flex align-items-center gap-2">
             <img src="assets/plus.svg"
                  alt="add agent"
                  class="mb-2">{{ agent.name }}</span>

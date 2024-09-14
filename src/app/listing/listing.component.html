@@ -22,7 +22,7 @@
         <input
           type="radio"
           formControlName="types"
-          [value]="type"
+          [value]="type.value"
         />
         {{ type.name }}
       </label>
@@ -39,7 +39,7 @@
           aria-describedby="username-help"
           formControlName="address"
         />
-        <small id="address-help" *ngIf="listingForm.get('location.address')?.touched"
+        <small id="address-help"
                [className]="listingForm.get('location.address')?.hasError('required') || listingForm.get('location.address')?.hasError('minlength') ? 'error-message' : 'success-message'">
           <img src="/assets/done.svg" alt="done"> მინიმუმ ორი სიმბოლო
         </small>
@@ -55,7 +55,7 @@
           aria-describedby="zip-help"
           formControlName="zip"
         />
-        <small id="zip-help" *ngIf="listingForm.get('location.zip')?.touched"
+        <small id="zip-help"
                [className]="listingForm.get('location.zip')?.hasError('required') || listingForm.get('location.zip')?.hasError('pattern') ? 'error-message' : 'success-message'">
           <img src="/assets/done.svg" alt="done"/>
           მხოლოდ რიცხვები
@@ -74,7 +74,7 @@
           formControlName="region"
           (onChange)="changeCities()"
         ></p-dropdown>
-        <small id="region-help" *ngIf="listingForm.get('location.region')?.touched"
+        <small id="region-help"
                [className]="listingForm.get('location.region')?.hasError('required') ? 'error-message' : 'success-message'">
           <img src="/assets/done.svg" alt="done"/>
           აირჩიეთ რაიონი
@@ -91,8 +91,9 @@
           placeholder="აირჩიეთ ქალაქი"
           [style]="{'width':'100%'}"
           styleClass="custom-dropdown"
-          formControlName="city"></p-dropdown>
-        <small id="district-help" *ngIf="listingForm.get('location.city')?.touched"
+          formControlName="city">
+        </p-dropdown>
+        <small id="district-help"
                [className]="listingForm.get('location.city')?.hasError('required') ? 'error-message' : 'success-message'">
           <img src="/assets/done.svg" alt="done"/>
           აირჩიეთ ქალაქი
@@ -113,7 +114,7 @@
           aria-describedby="price-help"
           formControlName="price"
         />
-        <small id="price-help" *ngIf="listingForm.get('details.price')?.touched"
+        <small id="price-help"
                [className]="listingForm.get('details.price')?.hasError('required')|| listingForm.get('details.price')?.hasError('pattern')  ? 'error-message' : 'success-message'">
           <img src="/assets/done.svg" alt="done"/>
           მხოლოდ რიცხვები
@@ -129,7 +130,7 @@
           formControlName="area"
         />
 
-        <small id="area-help" *ngIf="listingForm.get('details.area')?.touched"
+        <small id="area-help"
                [className]="listingForm.get('details.area')?.hasError('required')|| listingForm.get('details.area')?.hasError('pattern')  ? 'error-message' : 'success-message'">
           <img src="/assets/done.svg" alt="done"/>
           მხოლოდ რიცხვები
@@ -144,7 +145,7 @@
           aria-describedby="bedroom-help"
           formControlName="bedroom"
         />
-        <small id="bedroom-help" *ngIf="listingForm.get('details.bedroom')?.touched"
+        <small id="bedroom-help"
                [className]="listingForm.get('details.bedroom')?.hasError('required')|| listingForm.get('details.bedroom')?.hasError('pattern')  ? 'error-message' : 'success-message'">
           <img src="/assets/done.svg" alt="done"/>
           მხოლოდ რიცხვები
@@ -163,8 +164,9 @@
           formControlName="description"
         ></textarea>
 
-        <small id="description-help" *ngIf="listingForm.get('details.description')?.touched"
-               [className]="listingForm.get('details.description')?.hasError('required') || listingForm.get('details.description')?.hasError('pattern') ? 'error-message' : 'success-message'">
+        <small id="description-help"
+               [className]="listingForm.get('details.description')?.hasError('required') ||
+                listingForm.get('details.description')?.hasError('pattern') ? 'error-message' : 'success-message'">
           <img src="/assets/done.svg" alt="done">
           მინიმუმ 5 სიტყვა
         </small>
@@ -180,7 +182,7 @@
         <!-- Delete button to clear the selected image -->
         <img src="assets/bin.svg" alt="recycle bin" class="bin-img" *ngIf="imgURL" (click)="clearSelectedFile()"/>
 
-        <p style="color: red;" *ngIf="errorMessage">{{ errorMessage }}</p>
+        <p style="color: red; font-size:.7rem;" *ngIf="errorMessage">{{ errorMessage }}</p>
       </div>
 
 
@@ -201,14 +203,21 @@
         formControlName="agent"
       >
         <ng-template let-agent pTemplate="item">
-          <span *ngIf="agent.id === null" class="d-flex align-items-center gap-3"><img src="assets/plus.svg" alt="add agent" class="mb-2">{{ agent.name }}</span>
+          <span *ngIf="agent.id === null" class="d-flex align-items-center gap-3">
+            <img src="assets/plus.svg"
+                 alt="add agent"
+                 class="mb-2">{{ agent.name }}</span>
           <span *ngIf="agent.id !== null">{{ agent.name }}</span>
         </ng-template>
       </p-dropdown>
     </div>
 
 
-    <button class="primary-button" [disabled]="!listingForm.valid">Submit</button>
+    <div class="btn-section d-flex align-items-end justify-content-end my-5 gap-3 flex-wrap">
+      <button class="secondary-button" type="reset">გაუქმება</button>
+      <button class="primary-button" [disabled]="!listingForm.valid" type="submit">დაამატე ლისტინგი</button>
+    </div>
+
   </form>
 </div>
 

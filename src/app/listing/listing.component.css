@@ -80,11 +80,13 @@
 .location-item small {
   display: flex;
   align-items: center;
-  margin-top: 0.25rem;
+  margin-top: 4px;
+  font-size: 14px;
 }
 
 .location-item small img {
-  margin-right: 0.5rem;
+  margin-right: 7px;
+  margin-top: 1px;
 }
 
 .full-width {
@@ -178,7 +180,7 @@ img#blah {
 /* message styles */
 
 .error-message{
-  color:red;
+  color: #021526;
 }
 .success-message{
   color:green;

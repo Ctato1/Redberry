@@ -26,7 +26,17 @@ body {
   font-size: 1rem;
   border: none;
 }
-
+.secondary-button {
+  background: transparent;
+  padding: 10px;
+  align-items: center;
+  color: #F93B1D;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  border-radius: 10px;
+  border: 1px solid #F93B1D;
+}
 .filter-btn {
   padding: 8px 14px;
   background-color: transparent;

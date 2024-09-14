@@ -2,6 +2,7 @@
 
 :host ::ng-deep .custom-dropdown .p-dropdown {
   width: 100%;
+  border:1px solid grey;
 }
 
 :host ::ng-deep .custom-dropdown .p-dropdown-label {
@@ -174,7 +175,14 @@ img#blah {
 .agent-item{
   width: 49%;
 }
+/* message styles */
 
+.error-message{
+  color:red;
+}
+.success-message{
+  color:green;
+}
 
 
 /* Default layout: 2 columns, 2 rows */

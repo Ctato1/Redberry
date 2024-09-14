@@ -1,3 +1,11 @@
+<app-add-agent
+  [message]="'dsafasfasf'"
+  *ngIf="selectedAgent == null"
+  (close)="onHandleClose()"
+></app-add-agent>
+
+<p-toast></p-toast>
+
 <app-header></app-header>
 
 <div class="listing">
@@ -31,10 +39,12 @@
           aria-describedby="username-help"
           formControlName="address"
         />
-        <small id="address-help">
-          <img src="/assets/done.svg" alt="done">
-          მინიმუმ ორი სიმბოლო
+        <small id="address-help" *ngIf="listingForm.get('location.address')?.touched"
+               [className]="listingForm.get('location.address')?.hasError('required') || listingForm.get('location.address')?.hasError('minlength') ? 'error-message' : 'success-message'">
+          <img src="/assets/done.svg" alt="done"> მინიმუმ ორი სიმბოლო
         </small>
+
+
       </div>
       <div class="location-item">
         <label for="zip">საფოსტო ინდექსი *</label>
@@ -45,15 +55,17 @@
           aria-describedby="zip-help"
           formControlName="zip"
         />
-        <small id="zip-help">
-          <img src="/assets/done.svg" alt="done">
+        <small id="zip-help" *ngIf="listingForm.get('location.zip')?.touched"
+               [className]="listingForm.get('location.zip')?.hasError('required') || listingForm.get('location.zip')?.hasError('pattern') ? 'error-message' : 'success-message'">
+          <img src="/assets/done.svg" alt="done"/>
           მხოლოდ რიცხვები
         </small>
+
       </div>
       <div class="location-item">
-        <label for="city" class="mb-1">რაიონი *</label>
+        <label for="regions" class="mb-1">რაიონი *</label>
         <p-dropdown
-          id="city"
+          id="regions"
           [options]="regions"
           optionLabel="name"
           placeholder="აირჩიეთ რაიონი"
@@ -62,6 +74,12 @@
           formControlName="region"
           (onChange)="changeCities()"
         ></p-dropdown>
+        <small id="region-help" *ngIf="listingForm.get('location.region')?.touched"
+               [className]="listingForm.get('location.region')?.hasError('required') ? 'error-message' : 'success-message'">
+          <img src="/assets/done.svg" alt="done"/>
+          აირჩიეთ რაიონი
+        </small>
+
       </div>
 
       <div class="location-item" *ngIf="listingForm.get('location.region')?.valid">
@@ -73,9 +91,13 @@
           placeholder="აირჩიეთ ქალაქი"
           [style]="{'width':'100%'}"
           styleClass="custom-dropdown"
-          formControlName="city"
+          formControlName="city"></p-dropdown>
+        <small id="district-help" *ngIf="listingForm.get('location.city')?.touched"
+               [className]="listingForm.get('location.city')?.hasError('required') ? 'error-message' : 'success-message'">
+          <img src="/assets/done.svg" alt="done"/>
+          აირჩიეთ ქალაქი
+        </small>
 
-        ></p-dropdown>
       </div>
     </div>
 
@@ -91,13 +113,14 @@
           aria-describedby="price-help"
           formControlName="price"
         />
-        <small id="price-help">
-          <img src="/assets/done.svg" alt="done">
+        <small id="price-help" *ngIf="listingForm.get('details.price')?.touched"
+               [className]="listingForm.get('details.price')?.hasError('required')|| listingForm.get('details.price')?.hasError('pattern')  ? 'error-message' : 'success-message'">
+          <img src="/assets/done.svg" alt="done"/>
           მხოლოდ რიცხვები
         </small>
       </div>
       <div class="location-item">
-        <label for="zip">ფართობი</label>
+        <label for="area">ფართობი</label>
         <input
           type="number"
           pInputText
@@ -105,13 +128,15 @@
           aria-describedby="area-help"
           formControlName="area"
         />
-        <small id="area-help">
-          <img src="/assets/done.svg" alt="done">
+
+        <small id="area-help" *ngIf="listingForm.get('details.area')?.touched"
+               [className]="listingForm.get('details.area')?.hasError('required')|| listingForm.get('details.area')?.hasError('pattern')  ? 'error-message' : 'success-message'">
+          <img src="/assets/done.svg" alt="done"/>
           მხოლოდ რიცხვები
         </small>
       </div>
       <div class="location-item">
-        <label for="zip">საძინებლების რაოდენობა *</label>
+        <label for="bedroom">საძინებლების რაოდენობა *</label>
         <input
           type="number"
           pInputText
@@ -119,8 +144,9 @@
           aria-describedby="bedroom-help"
           formControlName="bedroom"
         />
-        <small id="bedroom-help">
-          <img src="/assets/done.svg" alt="done">
+        <small id="bedroom-help" *ngIf="listingForm.get('details.bedroom')?.touched"
+               [className]="listingForm.get('details.bedroom')?.hasError('required')|| listingForm.get('details.bedroom')?.hasError('pattern')  ? 'error-message' : 'success-message'">
+          <img src="/assets/done.svg" alt="done"/>
           მხოლოდ რიცხვები
         </small>
       </div>
@@ -137,7 +163,8 @@
           formControlName="description"
         ></textarea>
 
-        <small id="description-help">
+        <small id="description-help" *ngIf="listingForm.get('details.description')?.touched"
+               [className]="listingForm.get('details.description')?.hasError('required') || listingForm.get('details.description')?.hasError('pattern') ? 'error-message' : 'success-message'">
           <img src="/assets/done.svg" alt="done">
           მინიმუმ 5 სიტყვა
         </small>
@@ -172,16 +199,16 @@
         styleClass="custom-dropdown"
         (onChange)="onAgentChange($event)"
         formControlName="agent"
-      ></p-dropdown>
+      >
+        <ng-template let-agent pTemplate="item">
+          <span *ngIf="agent.id === null" class="d-flex align-items-center gap-3"><img src="assets/plus.svg" alt="add agent" class="mb-2">{{ agent.name }}</span>
+          <span *ngIf="agent.id !== null">{{ agent.name }}</span>
+        </ng-template>
+      </p-dropdown>
     </div>
 
 
-    <button class="primary-button">Submit</button>
+    <button class="primary-button" [disabled]="!listingForm.valid">Submit</button>
   </form>
 </div>
-<p-toast></p-toast>
-<app-add-agent
-  [message]="'dsafasfasf'"
-  *ngIf="selectedAgent == null"
-  (close)="onHandleClose()"
-></app-add-agent>
+

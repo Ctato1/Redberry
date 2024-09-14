@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormArray, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {AgentProps, CitiesProps, FilterService, RegionProps} from "../shared/filter.service";
 import {AgentsService, GeographicalInformationService, RealEstatesService} from "../apimodels";
 import {MessageService} from "primeng/api";
@@ -12,7 +12,7 @@ import {MessageService} from "primeng/api";
 
 
 export class ListingComponent implements OnInit {
-  types:{name:string,value:boolean}[] = [{name:'იყიდება',value:false}, {name:'ქირავდება',value:true}];
+  types: { name: string, value: boolean }[] = [{name: 'იყიდება', value: false}, {name: 'ქირავდება', value: true}];
 
   listingForm!: FormGroup;
 
@@ -21,13 +21,13 @@ export class ListingComponent implements OnInit {
   allCities: CitiesProps[] = [];
   chosenCity: CitiesProps[] = [];
   agents: AgentProps[] = [];
-  selectedAgent: number | null = Math.random();
+  selectedAgent: number | null = 0.001;
 
   imgURL: string | any | null = null;  // To store the image URL for preview
   errorMessage: string = '';  // To store error messages if file is too large
 
 
-  constructor(private realEstatesService: RealEstatesService,private messageService: MessageService ,private agentService: AgentsService, private geographicalInformationService: GeographicalInformationService) {
+  constructor(private realEstatesService: RealEstatesService, private messageService: MessageService, private agentService: AgentsService, private geographicalInformationService: GeographicalInformationService) {
   }
 
   ngOnInit() {
@@ -39,16 +39,16 @@ export class ListingComponent implements OnInit {
   initForm() {
     this.listingForm = new FormGroup({
       "location": new FormGroup({
-        'address': new FormControl(null, [Validators.required]),
-        'zip': new FormControl(null, [Validators.required]),
+        'address': new FormControl(null, [Validators.required, Validators.minLength(2)]),
+        'zip': new FormControl(null, [Validators.required, Validators.pattern("^[0-9]*$")]),
         'region': new FormControl(null, [Validators.required]),
         'city': new FormControl(null, [Validators.required]),
       }),
       "details": new FormGroup({
-        'price': new FormControl(null, [Validators.required]),
-        'area': new FormControl(null, [Validators.required]),
-        'bedroom': new FormControl(null, [Validators.required]),
-        'description': new FormControl(null, [Validators.required]),
+        'price':  new FormControl(null, [Validators.required, Validators.pattern("^[0-9]*$")]),
+        'area':  new FormControl(null, [Validators.required, Validators.pattern("^[0-9]*$")]),
+        'bedroom': new FormControl(null, [Validators.required, Validators.pattern("^[0-9]*$")]),
+        'description': new FormControl(null, [Validators.required, Validators.pattern(/^(\b\w+\b[\s\r\n]*){5,}$/)]),
         'photo': new FormControl(null, [Validators.required]),
       }),
       'types': new FormControl(this.types[0]),
@@ -59,7 +59,6 @@ export class ListingComponent implements OnInit {
   fetchData() {
     // get Regions
     this.geographicalInformationService.regionsGet().subscribe(regions => {
-      console.log(regions)
       this.regions = regions;
     })
     // get cities
@@ -74,7 +73,10 @@ export class ListingComponent implements OnInit {
 
 
   onSubmit() {
-    console.log(this.listingForm.value);
+
+    if(!this.listingForm.valid){
+      return;
+    }
 
     const address = this.listingForm.get('location.address')?.value;
     const zipCode = this.listingForm.get('location.zip')?.value;
@@ -107,11 +109,11 @@ export class ListingComponent implements OnInit {
       .subscribe(event => {
         if (event.type === 4) {  // Final response event
           console.log('Response:', event);  // Log only the final response
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Real estate posted successfully' });
+          this.messageService.add({severity: 'success', summary: 'Success', detail: 'Real estate posted successfully'});
         }
       }, err => {
         console.error('Error:', err);
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: err?.error?.message});
+        this.messageService.add({severity: 'error', summary: 'Error', detail: err?.error?.message});
       });
 
   }
@@ -165,16 +167,16 @@ export class ListingComponent implements OnInit {
     console.log(this.listingForm.get('agent')?.value?.id === null)
     // check if Agent is selected
     if (this.listingForm.get('agent')?.value?.id === null) {
-      console.log('Adding another agent');
       this.selectedAgent = null;
       this.listingForm.get('agent')?.setValue(null);
-    }else{
-      this.selectedAgent = Math.random();
+    } else {
+      this.selectedAgent =  0.001;
     }
   }
 
   onHandleClose() {
-    this.selectedAgent =  Math.random();
+    this.selectedAgent =  0.001;
   }
+
 
 }

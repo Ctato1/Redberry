@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {AgentsService} from "../../apimodels";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-add-agent',
@@ -15,7 +17,7 @@ export class AddAgentComponent implements OnInit{
   errorMessage: string = ''; // Error message for file upload
 
 
-  constructor() {
+  constructor(private agentsService:AgentsService, private messageService: MessageService,) {
 
   }
   ngOnInit() {
@@ -28,7 +30,7 @@ export class AddAgentComponent implements OnInit{
         'name': new FormControl(null, [Validators.required, Validators.minLength(2)]),
         'lastname': new FormControl(null, [Validators.required, Validators.minLength(2)]),
         'email': new FormControl(null, [Validators.required,  this.correctEmail.bind(this)]),
-        'number': new FormControl(null, [Validators.required, Validators.pattern("^[0-9+]*$")]),
+        'number': new FormControl(null, [Validators.required,  Validators.pattern("^5[0-9]{8}$") ]),
         'photo': new FormControl(null, [Validators.required]),
 
       })
@@ -40,6 +42,24 @@ export class AddAgentComponent implements OnInit{
   }
 
   onSubmit(){
+
+    const formData = this.agentForm.value;
+
+    const { name, lastname, email, number,photo } = formData;
+
+
+    if (!(photo instanceof Blob || photo instanceof File)) {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Invalid image type. Please select a valid file.'});
+      return;
+    }
+
+    this.agentsService.agentsPost(name, lastname, email, number,photo ).subscribe((event) => {
+      if (event.type === 4) { // Handle final response event
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Real estate posted successfully' });
+      }
+    },(error)=>{
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: error?.error?.message });
+    })
 
   }
 
@@ -77,7 +97,7 @@ export class AddAgentComponent implements OnInit{
 
       // Set the selected file in the form
       this.agentForm.get('photo')?.setValue(file);
-      this.errorMessage = ''; // Clear previous errors
+      this.errorMessage = '';
     }
   }
   clearSelectedFile(): void {

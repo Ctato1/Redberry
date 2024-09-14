@@ -85,10 +85,13 @@
       <p style="color: red; font-size:.7rem;" *ngIf="errorMessage">{{ errorMessage }}</p>
     </div>
 
-  </form>
 
     <div class="btn-section d-flex align-items-end justify-content-end gap-3 flex-wrap">
       <button class="secondary-button" (click)="onClose()">გაუქმება</button>
       <button class="primary-button" [disabled]="!agentForm.valid" type="submit">დაამატე აგენტი</button>
     </div>
+
+  </form>
+
+
 </div>

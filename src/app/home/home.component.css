@@ -4,21 +4,47 @@ input[type="checkbox"] {
   accent-color: rgba(69, 168, 73, 1); /* Change this to your desired color */
 }
 
-.filter-section{
-  display:flex;
+.main-section {
+  max-width: 1700px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+
+
+
+.filter {
+  position: relative;
+}
+
+.filter-section {
+  display: flex;
+  flex-wrap:wrap;
   border-radius: 10px;
+  width: 100%;
+  max-width:785px;
   border: 1px solid #DBDBDB;
   background: transparent;
   padding: 6px;
   gap: 24px;
 }
 
-.first-filter{
-  position:relative;
+.filter-details{
+  position: absolute;
+  display: flex;
+  flex-direction:column;
+  width: 731px;
+  padding: 24px;
+  gap: 32px;
+  border-radius: 10px;
+  border: 1px solid #DBDBDB;
+  background: #FFF;
+  box-shadow: 5px 5px 12px 0px rgba(2, 21, 38, 0.08);
 }
 
+
+
 .regions {
-  position:absolute;
+  position: absolute;
   border-radius: 10px;
   border: 1px solid #DBDBDB;
   background: #FFF;
@@ -38,7 +64,7 @@ input[type="checkbox"] {
   display: grid;
   grid-template-columns: repeat(3, auto);
   grid-template-rows: repeat(4, auto);
-  gap: 16px;
+  gap: 16px 50px;
   padding: 0;
   list-style: none;
   margin-bottom: 1rem;
@@ -46,36 +72,58 @@ input[type="checkbox"] {
 
 .grid-list li {
   width: fit-content;
-  display:flex;
-  align-items:center;
+  display: flex;
+  align-items: center;
   gap: 10px;
   font-size: 1rem;
 }
 
-.choose-btn {
+.primary-button {
   align-self: flex-end;
+  font-size: 14px;
+}
+
+.filtered-category {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  width: fit-content;
+}
+
+.filtered-section {
+  padding: 6px 10px;
+  border: 1px solid #DBDBDB;
+  border-radius: 43px;
+  background: #FFF;
+}
+
+.filtered-section img{
+  cursor:pointer;
 }
 
 @media (max-width: 768px) {
-  .regions{
+  .regions {
     width: 380px;
   }
+
   .grid-list {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(auto-fill, minmax(auto, auto));
   }
+
   .grid-list li {
     width: 100%;
-    display:flex;
+    display: flex;
     gap: 3px;
     font-size: 1rem;
   }
 }
 
 @media (max-width: 480px) {
-  .regions{
+  .regions {
     width: 200px;
   }
+
   .grid-list {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(auto-fill, minmax(auto, auto));

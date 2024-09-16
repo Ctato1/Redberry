@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
-import { Subscription } from "rxjs";
-import { FormBuilder, FormArray, FormControl } from "@angular/forms";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {Subscription} from "rxjs";
+import {FormBuilder, FormArray, FormControl} from "@angular/forms";
 import {FilterService, RegionProps} from "../shared/filter.service";
 import {GeographicalInformationService} from "../apimodels";
 
@@ -22,20 +22,24 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   // data
   regions: RegionProps[] = [];
+  littleRegions!: string | undefined;
 
   myForm = this.fb.group({
     selectedRegions: this.fb.array([])
   });
 
-  constructor(private http: HttpClient, private fb: FormBuilder,private geographicalInformationService: GeographicalInformationService) {}
+  constructor(private http: HttpClient, private fb: FormBuilder, private geographicalInformationService: GeographicalInformationService) {
+  }
 
   ngOnInit() {
     this.subscription = this.geographicalInformationService.regionsGet()
       .subscribe((res: RegionProps[]) => {
         this.regions = res;
+        console.log(this.regions)
         this.loadSavedRegions();
       });
   }
+
 
   ngOnDestroy() {
     if (this.subscription) {
@@ -47,11 +51,25 @@ export class HomeComponent implements OnInit, OnDestroy {
     return this.myForm.get('selectedRegions') as FormArray;
   }
 
+  deleteRegions() {
+    this.selectedRegionsFormArray.clear();
+    this.littleRegions = undefined;
+    localStorage.removeItem('selectedRegions');
+  }
+
+  getNameId(id: number) {
+    this.littleRegions = this.regions.find((item: RegionProps) => item.id == id)?.name;
+  }
+
+
   loadSavedRegions() {
     const savedRegions = localStorage.getItem('selectedRegions');
     if (savedRegions) {
       const parsedRegions = JSON.parse(savedRegions) as string[];
+      this.getNameId(+parsedRegions[0]);
+      console.log(savedRegions)
       parsedRegions.forEach(regionId => {
+
         this.selectedRegionsFormArray.push(new FormControl(regionId));
       });
     }
@@ -78,7 +96,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   onRegionSubmit() {
     this.regionFilter = false;
     const selectedRegions = this.selectedRegionsFormArray.value;
+    this.getNameId(+selectedRegions[0]);
+    console.log(selectedRegions)
     localStorage.setItem('selectedRegions', JSON.stringify(selectedRegions));
-    console.log('Selected regions:', selectedRegions);
+    console.log('Selected regions:', this.littleRegions);
   }
 }

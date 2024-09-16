@@ -1,73 +1,55 @@
 <app-header></app-header>
 
-<div class="container mt-5">
-  <div class="row">
-    <div class="filter-section col-6">
-      <div class="first-filter">
-        <button type="button" class="filter-region"
-                [ngClass]="{'filter-act-btn': regionFilter, 'filter-btn': !regionFilter}"
-                (click)="regionFilter = !regionFilter">
-          რეგიონი
-          <img [src]="regionFilter ? '/assets/down-arrow.svg' : '/assets/up-arrow.svg'"
-               [alt]="regionFilter ? 'active-filter' : 'inactive-filter'">
-        </button>
-        <form class="d-flex gap-4" [formGroup]="myForm" (ngSubmit)="onRegionSubmit()">
+<main class="main-section mt-5">
+  <form class="filter-section" [formGroup]="myForm" (ngSubmit)="onRegionSubmit()">
+    <div class="filter">
 
-          <div class="regions" *ngIf="regionFilter">
-            <h5>რეგიონის მიხედვით</h5>
+      <button type="button" class="filter-region"
+              [ngClass]="{'filter-act-btn': regionFilter, 'filter-btn': !regionFilter}"
+              (click)="regionFilter = !regionFilter">
+        რეგიონი
+        <img [src]="regionFilter ? '/assets/down-arrow.svg' : '/assets/up-arrow.svg'"
+             [alt]="regionFilter ? 'active-filter' : 'inactive-filter'">
+      </button>
 
-            <ul class="grid-list">
-              <li *ngFor="let region of regions">
-                <input
-                  type="checkbox"
-                  [id]="region.id"
-                  [value]="region.id"
-                  [checked]="isRegionSelected(region.id)"
-                  (change)="onCheckboxChange($event)"
-                />
-                <label [for]="region.id">{{ region.name }}</label>
-              </li>
-            </ul>
+      <!-- Template definition for the section -->
+      <ng-template #regionSection>
+        <section class="filter-details mt-2" [formGroup]="myForm" (ngSubmit)="onRegionSubmit()">
+          <h5>რეგიონის მიხედვით</h5>
 
-            <button class="btn btn-primary choose-btn" type="submit">არჩევა</button>
-          </div>
+          <ul class="grid-list">
+            <li *ngFor="let region of regions">
+              <input
+                type="checkbox"
+                [id]="region.id"
+                [value]="region.id"
+                [checked]="isRegionSelected(region.id)"
+                (change)="onCheckboxChange($event)"
+              />
+              <label [for]="region.id">{{ region.name }}</label>
+            </li>
+          </ul>
 
-        </form>
-      </div>
+          <button class="primary-button " type="submit">არჩევა</button>
+        </section>
+      </ng-template>
 
-<!--      <div class="second-filter">-->
-<!--        <button type="button" class="filter-price"-->
-<!--                [ngClass]="{'filter-act-btn': regionFilter, 'filter-btn': !regionFilter}"-->
-<!--                (click)="regionFilter = !regionFilter">-->
-<!--          საფასო კატეგორია-->
-<!--          <img [src]="regionFilter ? '/assets/down-arrow.svg' : '/assets/up-arrow.svg'"-->
-<!--               [alt]="regionFilter ? 'active-filter' : 'inactive-filter'">-->
-<!--        </button>-->
-<!--        <form class="d-flex gap-4" [formGroup]="myForm" (ngSubmit)="onRegionSubmit()">-->
+      <!-- Conditional rendering of the template -->
+      <ng-container *ngIf="regionFilter" [ngTemplateOutlet]="regionSection"></ng-container>
 
-<!--          <div class="regions" *ngIf="regionFilter">-->
-<!--            <h5>ფასის მიხედვით</h5>-->
-
-<!--            <ul class="grid-list">-->
-<!--              <li *ngFor="let region of regions">-->
-<!--                <input-->
-<!--                  type="checkbox"-->
-<!--                  [id]="region.id"-->
-<!--                  [value]="region.id"-->
-<!--                  [checked]="isRegionSelected(region.id)"-->
-<!--                  (change)="onCheckboxChange($event)"-->
-<!--                />-->
-<!--                <label [for]="region.id">{{ region.name }}</label>-->
-<!--              </li>-->
-<!--            </ul>-->
-
-<!--            <button class="btn btn-primary choose-btn" type="submit">არჩევა</button>-->
-<!--          </div>-->
-
-<!--        </form>-->
-<!--      </div>-->
     </div>
+
+
+  </form>
+
+  <div class="mt-3">
+    <ul class="filtered-category list-unstyled">
+      <li class="filtered-section" *ngIf="littleRegions !== undefined"  >{{ littleRegions }}  <img src="assets/x.svg" alt="delete-region-filter" (click)="deleteRegions()" /></li>
+<!--      <span *ngIf="littleRegions !== undefined" class="filtered-section">{{ littleRegions }}</span>-->
+<!--      <span *ngIf="littleRegions !== undefined" class="filtered-section">{{ littleRegions }}</span>-->
+<!--      <span *ngIf="littleRegions !== undefined" class="filtered-section">{{ littleRegions }}</span>-->
+    </ul>
   </div>
 
 
-</div>
+</main>

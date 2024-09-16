@@ -50,12 +50,24 @@ export class ListingComponent implements OnInit {
         'price': new FormControl(null, [Validators.required, Validators.pattern("^[0-9]*$")]),
         'area': new FormControl(null, [Validators.required, Validators.pattern("^[0-9]*$")]),
         'bedroom': new FormControl(null, [Validators.required, Validators.pattern("^[0-9]*$")]),
-        'description': new FormControl(null, [Validators.required, Validators.pattern(/^(\b\w+\b[\s\r\n]*){5,}$/)]),
+        'description': new FormControl(null, [Validators.required,    this.correctDescription.bind(this)]),
         'photo': new FormControl(null, [Validators.required]),
       }),
       'types': new FormControl(this.types[0]), // Default type
       'agent': new FormControl(null, [Validators.required]),
     });
+  }
+  correctDescription(control: FormControl): { [s: string]: boolean } | null {
+    if (!control.value) {
+      // If control value is null or undefined, return no error
+      return null;
+    }
+
+    if (control.value.split(' ').length < 5) {
+      return { 'wrongWords': true };
+    }
+
+    return null;
   }
 
   // Fetch data for dropdowns (regions, cities, agents)

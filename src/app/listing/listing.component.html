@@ -171,7 +171,7 @@
 
         <small id="description-help"
                [className]="listingForm.get('details.description')?.hasError('required') ||
-                listingForm.get('details.description')?.hasError('pattern') ? 'error-message' : 'success-message'">
+               listingForm?.get('details.description')?.hasError('wrongWords') ? 'error-message' : 'success-message'">
           <img src="/assets/done.svg" alt="done">
           მინიმუმ 5 სიტყვა
         </small>

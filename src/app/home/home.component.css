@@ -11,27 +11,26 @@ input[type="checkbox"] {
 }
 
 
-
 .filter {
   position: relative;
 }
 
 .filter-section {
   display: flex;
-  flex-wrap:wrap;
+  flex-wrap: wrap;
   border-radius: 10px;
   width: 100%;
-  max-width:785px;
+  max-width: 785px;
   border: 1px solid #DBDBDB;
   background: transparent;
   padding: 6px;
   gap: 24px;
 }
 
-.filter-details{
+.filter-details {
   position: absolute;
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   width: 731px;
   padding: 24px;
   gap: 32px;
@@ -40,7 +39,6 @@ input[type="checkbox"] {
   background: #FFF;
   box-shadow: 5px 5px 12px 0px rgba(2, 21, 38, 0.08);
 }
-
 
 
 .regions {
@@ -84,9 +82,13 @@ input[type="checkbox"] {
 }
 
 .filtered-category {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
+  /*display: grid;*/
+  /*grid-template-columns: repeat(4, 1fr);*/
+  /*gap: 1rem;*/
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap: 8px;
   width: fit-content;
 }
 
@@ -95,10 +97,87 @@ input[type="checkbox"] {
   border: 1px solid #DBDBDB;
   border-radius: 43px;
   background: #FFF;
+  width:fit-content;
 }
 
-.filtered-section img{
-  cursor:pointer;
+.filtered-section img {
+  cursor: pointer;
+}
+
+/* price section */
+
+.price-details {
+  width: 382px;
+  padding: 24px;
+  margin-left: 100px;
+}
+
+.price-details b {
+  color: #021526;
+  font-size: 14px;
+}
+
+.price-section {
+  width: 100%;
+  display: flex;
+  gap: 24px;
+}
+
+.price-section li {
+  cursor: pointer;
+  margin-top: 8px;
+  color: #2D3648;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+
+.price-section input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #808A93;
+}
+
+.input-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 24px;
+}
+
+.price-error{
+  width: 400px;
+  position:absolute;
+  bottom: -20px;
+  left: 0px;
+  color: #F93B1D;
+  font-size: 12px;
+  font-weight: 400;
+}
+.input-wrapper input[type="number"] {
+  padding-right: 20px; /* Adjust to leave space for the plus sign */
+
+}
+
+.input-wrapper input[type="number"].error {
+  border-radius: 6px;
+  border: 1px solid #F93B1D;
+}
+
+
+.lari-sign {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #2D3648;
+}
+
+.price-section__min .active,
+.price-section__max .active {
+  color: green;
+  font-weight: 500;
 }
 
 @media (max-width: 768px) {

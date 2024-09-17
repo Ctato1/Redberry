@@ -2,10 +2,10 @@
 
 <main class="main-section mt-5">
   <form class="filter-section" [formGroup]="myForm" (ngSubmit)="onSubmit()">
+
     <div class="filter">
 
       <!--  region filter    -->
-
       <button type="button" class="filter-button"
               [ngClass]="{'filter-act-btn': regionFilter, 'filter-btn': !regionFilter}"
               (click)="regionFilterOn()">
@@ -16,7 +16,7 @@
       </button>
       <!-- Template definition for the section -->
       <ng-template #regionSection>
-        <section class="filter-details mt-2" [formGroup]="myForm" (ngSubmit)="onRegionSubmit()">
+        <section class="filter-details region-details mt-2" [formGroup]="myForm" (ngSubmit)="onRegionSubmit()">
           <h5 class="text-start">რეგიონის მიხედვით</h5>
 
           <ul class="grid-list">
@@ -32,7 +32,7 @@
             </li>
           </ul>
 
-          <button class="primary-button" type="submit">არჩევა</button>
+          <button class="primary-button" type="button" (click)="onRegionSubmit()">არჩევა</button>
         </section>
       </ng-template>
 
@@ -52,11 +52,11 @@
 
       <!-- Template definition for the section -->
       <ng-template #priceSection>
-        <section class="filter-details price-details mt-2" [formGroup]="myForm">
+        <section class="filter-details price-details mt-2" [formGroup]="myForm" (ngSubmit)="onPriceSubmit()">
           <h5 class="text-start">ფასის მიხედვით</h5>
 
           <div class="price-section">
-            <ul class="price-section__min list-unstyled">
+            <ul class="min list-unstyled">
               <div class="input-wrapper">
                 <input type="number" placeholder="დან" formControlName="minPrice"
                        [class.error]="myForm.get('minPrice')?.value > myForm.get('maxPrice')?.value">
@@ -71,7 +71,7 @@
               <li (click)="setMinPrice(40000)" [class.active]="myForm.get('minPrice')?.value == 40000">40000 ₾</li>
             </ul>
 
-            <ul class="price-section__max list-unstyled">
+            <ul class="max list-unstyled">
               <div class="input-wrapper">
                 <input type="number" placeholder="მდე" formControlName="maxPrice"
                        [class.error]="myForm.get('minPrice')?.value > myForm.get('maxPrice')?.value">
@@ -91,22 +91,78 @@
 
       <!-- Conditional rendering of the template -->
       <ng-container *ngIf="priceFilter" [ngTemplateOutlet]="priceSection"></ng-container>
-    </div>
 
+      <!--   area filter   -->
+
+      <button type="button" class="filter-button"
+              [ngClass]="{'filter-act-btn': areaFilter, 'filter-btn': !areaFilter}"
+              (click)="areaFilterOn()">
+        საფასო კატეგორია
+        <img [src]="areaFilter ? '/assets/down-arrow.svg' : '/assets/up-arrow.svg'"
+             [alt]="areaFilter ? 'active-filter' : 'inactive-filter'">
+
+      </button>
+
+      <!-- Template definition for the section -->
+      <ng-template #areaSection>
+        <section class="filter-details area-details mt-2" [formGroup]="myForm" (ngSubmit)="onAreaSubmit()">
+          <h5 class="text-start">ფართობის მიხედვით</h5>
+
+          <div class="price-section">
+            <ul class="min list-unstyled">
+              <div class="input-wrapper">
+                <input type="number" placeholder="დან" formControlName="minArea"
+                       [class.error]="myForm.get('minArea')?.value > myForm.get('maxPrice')?.value">
+                <span class="lari-sign">მ<sup>2</sup></span>
+                <span *ngIf="myForm.get('minArea')?.value > myForm.get('maxArea')?.value" class="price-error">ჩაწერეთ ვალიდური მონაცემები</span>
+              </div>
+
+              <b>მინ. ფასი</b>
+              <li (click)="setMinArea(30)" [class.active]="myForm.get('minArea')?.value == 30">30 მ<sup>2</sup></li>
+              <li (click)="setMinArea(60)" [class.active]="myForm.get('minArea')?.value == 60">60 მ<sup>2</sup></li>
+              <li (click)="setMinArea(90)" [class.active]="myForm.get('minArea')?.value == 90">90 მ<sup>2</sup></li>
+              <li (click)="setMinArea(120)" [class.active]="myForm.get('minArea')?.value == 120">120 მ<sup>2</sup></li>
+            </ul>
+
+            <ul class="max list-unstyled">
+              <div class="input-wrapper">
+                <input type="number" placeholder="მდე" formControlName="maxArea"
+                       [class.error]="myForm.get('minPrice')?.value > myForm.get('maxPrice')?.value">
+                <span class="lari-sign">მ<sup>2</sup></span>
+              </div>
+              <b>მაქს. ფასი</b>
+              <li (click)="setMaxArea(100)" [class.active]="myForm.get('maxArea')?.value == 100">100 მ<sup>2</sup></li>
+              <li (click)="setMaxArea(150)" [class.active]="myForm.get('maxArea')?.value == 150">150 მ<sup>2</sup></li>
+              <li (click)="setMaxArea(200)" [class.active]="myForm.get('maxArea')?.value == 200">200 მ<sup>2</sup></li>
+              <li (click)="setMaxArea(250)" [class.active]="myForm.get('maxArea')?.value == 250">250 მ<sup>2</sup></li>
+            </ul>
+          </div>
+
+          <button class="primary-button " type="button" (click)="onAreaSubmit()">არჩევა</button>
+        </section>
+      </ng-template>
+
+      <!-- Conditional rendering of the template -->
+      <ng-container *ngIf="areaFilter" [ngTemplateOutlet]="areaSection"></ng-container>
+
+    </div>
 
   </form>
 
-  <div class="mt-3">
-    <ul class="filtered-category list-unstyled">
-      <li class="filtered-section" *ngIf="littleRegions !== undefined"
-          (click)="regionFilterOn()">{{ littleRegions }}
-        <img src="assets/x.svg" alt="delete-region-filter" (click)="deleteRegions()"/></li>
-      <li class="filtered-section" *ngIf="littlePrices !== undefined"
-          (click)="priceFilterOn()">{{ littlePrices }}
-        <img src="assets/x.svg" alt="delete-prices-filter" (click)="deletePrices()"/></li>
-
-    </ul>
-  </div>
 
 
 </main>
+
+<div class="little-filters mt-3">
+  <ul class="filtered-category list-unstyled">
+    <li class="filtered-section" *ngIf="littleRegions !== undefined"
+        (click)="regionFilterOn()">{{ littleRegions }}
+      <img src="assets/x.svg" alt="delete-region-filter" (click)="deleteRegions()"/></li>
+    <li class="filtered-section" *ngIf="littlePrices !== undefined"
+        (click)="priceFilterOn()">{{ littlePrices }}
+      <img src="assets/x.svg" alt="delete-prices-filter" (click)="deletePrices()"/></li>
+    <li class="filtered-section" *ngIf="littleAreas !== undefined"
+        (click)="areaFilterOn()">{{ littleAreas }}
+      <img src="assets/x.svg" alt="delete-prices-filter" (click)="deleteAreas()"/></li>
+  </ul>
+</div>

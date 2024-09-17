@@ -26,7 +26,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   // show details
   littleRegions!: string | undefined;
-  littlePrices!:string | undefined;
+  littlePrices!: string | undefined;
+  littleAreas!: string | undefined;
 
 
   prices: any = {min: null, max: null};
@@ -35,6 +36,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     selectedRegions: this.fb.array([]),
     minPrice: new FormControl(),
     maxPrice: new FormControl(),
+    minArea: new FormControl(),
+    maxArea: new FormControl(),
   });
 
   constructor(private http: HttpClient, private fb: FormBuilder, private geographicalInformationService: GeographicalInformationService) {
@@ -44,7 +47,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscription = this.geographicalInformationService.regionsGet()
       .subscribe((res: RegionProps[]) => {
         this.regions = res;
-        this.loadSavedRegions();
+        this.loadSavedFilters();
       });
   }
 
@@ -61,16 +64,30 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
 
-  // delete filters bt click
+  // delete filters with click
   deleteRegions() {
     this.selectedRegionsFormArray.clear();
     this.littleRegions = undefined;
     localStorage.removeItem('selectedRegions');
   }
-  deletePrices(){
+
+  deletePrices() {
+    const min = (this.myForm.get('minPrice') as FormArray);
+    const max = this.myForm.get('maxPrice') as FormArray;
     localStorage.removeItem('selectedPricesMin')
     localStorage.removeItem('selectedPricesMax')
+    min.reset();
+    max.reset();
     this.littlePrices = undefined;
+  }
+  deleteAreas() {
+    const min = (this.myForm.get('minArea') as FormArray);
+    const max = this.myForm.get('maxArea') as FormArray;
+    localStorage.removeItem('selectedAreaMin')
+    localStorage.removeItem('selectedAreaMax')
+    min.reset();
+    max.reset();
+    this.littleAreas = undefined;
   }
 
   getNameId(id: number) {
@@ -78,10 +95,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
 
-  loadSavedRegions() {
+  loadSavedFilters() {
     const savedRegions = localStorage.getItem('selectedRegions');
-    const savedPricesMin:string | null = localStorage.getItem('selectedPricesMin')
-    const savedPricesMax:string | null = localStorage.getItem('selectedPricesMax')
+    const savedPricesMin: string | null = localStorage.getItem('selectedPricesMin')
+    const savedPricesMax: string | null = localStorage.getItem('selectedPricesMax')
+    const savedAreasMin: string | null = localStorage.getItem('selectedAreaMin')
+    const savedAreasMax: string | null = localStorage.getItem('selectedAreaMax')
+
     if (savedRegions) {
       const parsedRegions = JSON.parse(savedRegions) as string[];
       this.getNameId(+parsedRegions[0]);
@@ -91,12 +111,16 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.selectedRegionsFormArray.push(new FormControl(regionId));
       });
     }
-    if(savedPricesMin && savedPricesMax){
+    if (savedPricesMin && savedPricesMax) {
       this.littlePrices = JSON.parse(savedPricesMin) + "₾ - " + JSON.parse(savedPricesMax) + "₾";
       this.myForm.get('maxPrice')?.setValue(JSON.parse(savedPricesMax))
       this.myForm.get('minPrice')?.setValue(JSON.parse(savedPricesMin))
     }
-    console.log(this.littlePrices)
+    if (savedAreasMin && savedAreasMax) {
+      this.littleAreas = JSON.parse(savedAreasMin) + "მ - " + JSON.parse(savedAreasMax) + 'მ';
+      this.myForm.get('maxArea')?.setValue(JSON.parse(savedAreasMax))
+      this.myForm.get('minArea')?.setValue(JSON.parse(savedAreasMin))
+    }
   }
 
   onCheckboxChange(event: Event) {
@@ -116,29 +140,45 @@ export class HomeComponent implements OnInit, OnDestroy {
   isRegionSelected(regionId: number): boolean {
     return this.selectedRegionsFormArray.value.includes(regionId.toString());
   }
+
   // change prices
   setMinPrice(value: number) {
     this.myForm.get('minPrice')?.setValue(value);
   }
+
   setMaxPrice(value: number) {
     this.myForm.get('maxPrice')?.setValue(value);
   }
+  setMinArea(value: number) {
+    this.myForm.get('minArea')?.setValue(value);
+  }
+  setMaxArea(value: number) {
+    this.myForm.get('maxArea')?.setValue(value);
+  }
+
   // change all filter flags
-  removeFilters(){
+  removeFilters() {
     this.regionFilter = false;
     this.priceFilter = false;
     this.areaFilter = false;
     this.bedroomFilter = false;
   }
-  regionFilterOn(){
-    const current:boolean = this.regionFilter;
+
+  regionFilterOn() {
+    const current: boolean = this.regionFilter;
     this.removeFilters();
     this.regionFilter = !current;
   }
-  priceFilterOn(){
-    const current:boolean = this.priceFilter;
+
+  priceFilterOn() {
+    const current: boolean = this.priceFilter;
     this.removeFilters();
     this.priceFilter = !current;
+  }
+  areaFilterOn(){
+    const current: boolean = this.areaFilter;
+    this.removeFilters();
+    this.areaFilter = !current;
   }
 
   // Submit functions
@@ -147,31 +187,52 @@ export class HomeComponent implements OnInit, OnDestroy {
     const selectedRegions = this.selectedRegionsFormArray.value;
     this.getNameId(+selectedRegions[0]);
     localStorage.setItem('selectedRegions', JSON.stringify(selectedRegions));
+    this.onSubmit();
   }
 
   onPriceSubmit() {
     this.priceFilter = false;
     const minPrice = this.myForm.get("minPrice")?.value;
     const maxPrice = this.myForm.get("maxPrice")?.value;
-    if(minPrice === null && maxPrice === null){
+    if (minPrice === null && maxPrice === null) {
       this.deletePrices()
     }
-    if(minPrice > maxPrice || minPrice === null || maxPrice === null || minPrice < 0 || maxPrice < 0 ){
+    if (minPrice > maxPrice || minPrice === null || maxPrice === null || minPrice < 0 || maxPrice < 0) {
       return;
     }
 
     localStorage.setItem('selectedPricesMax', JSON.stringify(maxPrice));
     localStorage.setItem('selectedPricesMin', JSON.stringify(minPrice));
-    const savedPricesMin:string | null = localStorage.getItem('selectedPricesMin')
-    const savedPricesMax:string | null = localStorage.getItem('selectedPricesMax')
-    if(savedPricesMin && savedPricesMax){
+    const savedPricesMin: string | null = localStorage.getItem('selectedPricesMin')
+    const savedPricesMax: string | null = localStorage.getItem('selectedPricesMax')
+    if (savedPricesMin && savedPricesMax) {
       this.littlePrices = JSON.parse(savedPricesMin) + "₾ - " + JSON.parse(savedPricesMax) + "₾";
     }
+    this.onSubmit();
+  }
+  onAreaSubmit(){
+    this.areaFilter = false;
+    const minArea = this.myForm.get("minArea")?.value;
+    const maxArea = this.myForm.get("maxArea")?.value;
+    if (minArea === null && maxArea === null) {
+      this.deletePrices()
+    }
+    if (minArea > maxArea || minArea === null || maxArea === null || minArea < 0 || maxArea < 0) {
+      return;
+    }
 
+    localStorage.setItem('selectedAreaMax', JSON.stringify(maxArea));
+    localStorage.setItem('selectedAreaMin', JSON.stringify(minArea));
+    const savedAreaMin: string | null = localStorage.getItem('selectedAreaMin')
+    const savedAreaMax: string | null = localStorage.getItem('selectedAreaMax')
+    if (savedAreaMin && savedAreaMax) {
+      this.littleAreas = JSON.parse(savedAreaMin) + "მ - " + JSON.parse(savedAreaMax) + 'მ';
+    }
+    this.onSubmit();
   }
 
+
   onSubmit() {
-    this.onRegionSubmit();
-    this.onPriceSubmit();
+    console.log(this.myForm)
   }
 }

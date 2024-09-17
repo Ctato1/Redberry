@@ -8,8 +8,15 @@ input[type="checkbox"] {
   max-width: 1700px;
   margin: 0 auto;
   padding: 0 30px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
-
+.little-filters{
+  max-width: 1700px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
 
 .filter {
   position: relative;
@@ -109,7 +116,7 @@ input[type="checkbox"] {
 .price-details {
   width: 382px;
   padding: 24px;
-  margin-left: 100px;
+  margin-left: 108px;
 }
 
 .price-details b {
@@ -174,28 +181,42 @@ input[type="checkbox"] {
   color: #2D3648;
 }
 
-.price-section__min .active,
-.price-section__max .active {
+/* area details */
+
+.area-details {
+  width: 382px;
+  padding: 24px;
+  margin-left: 305px;
+}
+
+.min .active,
+.max .active {
   color: green;
   font-weight: 500;
 }
 
 @media (max-width: 768px) {
+  .main-section {
+    flex-direction:column;
+  }
   .regions {
     width: 380px;
   }
 
-  .grid-list {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(auto-fill, minmax(auto, auto));
+  .region-details {
+    width: fit-content;
+    margin-left: 0px;
+  }
+  .price-details {
+    width: 300px;
+    margin-left: 0px;
+  }
+  .area-details {
+    width: 300px;
+    margin-left: 0px;
   }
 
-  .grid-list li {
-    width: 100%;
-    display: flex;
-    gap: 3px;
-    font-size: 1rem;
-  }
+
 }
 
 @media (max-width: 480px) {
@@ -210,5 +231,17 @@ input[type="checkbox"] {
 
   .choose-btn {
     align-self: center;
+  }
+  .region-details {
+    width: 220px;
+  }
+  .price-details {
+    width: 200px;
+  }
+  .area-details {
+    width: 200px;
+  }
+  .price-section {
+    flex-direction:column;
   }
 }

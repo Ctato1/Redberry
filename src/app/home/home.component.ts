@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   littleRegions!: string | undefined;
   littlePrices!: string | undefined;
   littleAreas!: string | undefined;
+  littleBedrooms!: string | undefined;
 
 
   prices: any = {min: null, max: null};
@@ -38,6 +39,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     maxPrice: new FormControl(),
     minArea: new FormControl(),
     maxArea: new FormControl(),
+    bedrooms: new FormControl(),
   });
 
   constructor(private http: HttpClient, private fb: FormBuilder, private geographicalInformationService: GeographicalInformationService) {
@@ -89,6 +91,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     max.reset();
     this.littleAreas = undefined;
   }
+  deleteBedrooms() {
+    const bedrooms = (this.myForm.get('bedrooms') as FormArray);
+    localStorage.removeItem('selectedBedrooms')
+    bedrooms.reset();
+    this.littleBedrooms = undefined;
+  }
 
   getNameId(id: number) {
     this.littleRegions = this.regions.find((item: RegionProps) => item.id == id)?.name;
@@ -101,6 +109,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     const savedPricesMax: string | null = localStorage.getItem('selectedPricesMax')
     const savedAreasMin: string | null = localStorage.getItem('selectedAreaMin')
     const savedAreasMax: string | null = localStorage.getItem('selectedAreaMax')
+    const savedBedrooms: string | null = localStorage.getItem('selectedBedrooms')
 
     if (savedRegions) {
       const parsedRegions = JSON.parse(savedRegions) as string[];
@@ -120,6 +129,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.littleAreas = JSON.parse(savedAreasMin) + "მ - " + JSON.parse(savedAreasMax) + 'მ';
       this.myForm.get('maxArea')?.setValue(JSON.parse(savedAreasMax))
       this.myForm.get('minArea')?.setValue(JSON.parse(savedAreasMin))
+    }
+    if(savedBedrooms){
+      this.littleBedrooms = JSON.parse(savedBedrooms);
+      this.myForm.get('bedrooms')?.setValue(JSON.parse(savedBedrooms))
     }
   }
 
@@ -180,6 +193,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.removeFilters();
     this.areaFilter = !current;
   }
+  bedroomFilterOn(){
+    const current: boolean = this.bedroomFilter;
+    this.removeFilters();
+    this.bedroomFilter = !current;
+  }
 
   // Submit functions
   onRegionSubmit() {
@@ -215,7 +233,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     const minArea = this.myForm.get("minArea")?.value;
     const maxArea = this.myForm.get("maxArea")?.value;
     if (minArea === null && maxArea === null) {
-      this.deletePrices()
+      this.deleteAreas()
     }
     if (minArea > maxArea || minArea === null || maxArea === null || minArea < 0 || maxArea < 0) {
       return;
@@ -227,6 +245,20 @@ export class HomeComponent implements OnInit, OnDestroy {
     const savedAreaMax: string | null = localStorage.getItem('selectedAreaMax')
     if (savedAreaMin && savedAreaMax) {
       this.littleAreas = JSON.parse(savedAreaMin) + "მ - " + JSON.parse(savedAreaMax) + 'მ';
+    }
+    this.onSubmit();
+  }
+
+  onBedroomSubmit(){
+    this.bedroomFilter = false;
+    const bedrooms = this.myForm.get("bedrooms")?.value;
+    if (bedrooms === null) {
+      this.deletePrices()
+    }
+    localStorage.setItem('selectedBedrooms', JSON.stringify(bedrooms));
+    const savedBedrooms: string | null = localStorage.getItem('selectedBedrooms')
+    if(savedBedrooms){
+      this.littleBedrooms = JSON.parse(savedBedrooms);
     }
     this.onSubmit();
   }

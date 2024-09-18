@@ -189,12 +189,40 @@ input[type="checkbox"] {
   margin-left: 305px;
 }
 
+
 .min .active,
 .max .active {
   color: green;
   font-weight: 500;
 }
+/* bedroom details */
+.bedroom-details {
+  width: 282px;
+  padding: 24px;
+  margin-left: 420px;
+}
 
+.bedroom-details input{
+  width: 41px;
+  padding: 10px;
+  color: rgba(2, 21, 38, 0.40);
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  border-radius: 6px;
+  border: 1px solid #808A93;
+}
+/* For Chrome, Safari, Edge, Opera */
+.bedroom-details input[type="number"]::-webkit-outer-spin-button,
+.bedroom-details input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* For Firefox */
+.bedroom-details input[type="number"] {
+  -moz-appearance: textfield;
+}
 @media (max-width: 768px) {
   .main-section {
     flex-direction:column;
@@ -215,7 +243,10 @@ input[type="checkbox"] {
     width: 300px;
     margin-left: 0px;
   }
-
+  .bedroom-details{
+    width: 300px;
+    margin-left: 0px;
+  }
 
 }
 
@@ -239,6 +270,9 @@ input[type="checkbox"] {
     width: 200px;
   }
   .area-details {
+    width: 200px;
+  }
+  .bedroom-details{
     width: 200px;
   }
   .price-section {

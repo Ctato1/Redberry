@@ -97,7 +97,7 @@
       <button type="button" class="filter-button"
               [ngClass]="{'filter-act-btn': areaFilter, 'filter-btn': !areaFilter}"
               (click)="areaFilterOn()">
-        საფასო კატეგორია
+        ფართობი
         <img [src]="areaFilter ? '/assets/down-arrow.svg' : '/assets/up-arrow.svg'"
              [alt]="areaFilter ? 'active-filter' : 'inactive-filter'">
 
@@ -112,7 +112,7 @@
             <ul class="min list-unstyled">
               <div class="input-wrapper">
                 <input type="number" placeholder="დან" formControlName="minArea"
-                       [class.error]="myForm.get('minArea')?.value > myForm.get('maxPrice')?.value">
+                       [class.error]="myForm.get('minArea')?.value > myForm.get('maxArea')?.value">
                 <span class="lari-sign">მ<sup>2</sup></span>
                 <span *ngIf="myForm.get('minArea')?.value > myForm.get('maxArea')?.value" class="price-error">ჩაწერეთ ვალიდური მონაცემები</span>
               </div>
@@ -127,7 +127,7 @@
             <ul class="max list-unstyled">
               <div class="input-wrapper">
                 <input type="number" placeholder="მდე" formControlName="maxArea"
-                       [class.error]="myForm.get('minPrice')?.value > myForm.get('maxPrice')?.value">
+                       [class.error]="myForm.get('minArea')?.value > myForm.get('maxArea')?.value">
                 <span class="lari-sign">მ<sup>2</sup></span>
               </div>
               <b>მაქს. ფასი</b>
@@ -144,6 +144,31 @@
 
       <!-- Conditional rendering of the template -->
       <ng-container *ngIf="areaFilter" [ngTemplateOutlet]="areaSection"></ng-container>
+
+      <!--   bedroom filter   -->
+
+      <button type="button" class="filter-button"
+              [ngClass]="{'filter-act-btn': bedroomFilter, 'filter-btn': !bedroomFilter}"
+              (click)="bedroomFilterOn()">
+        საძინებლების რაოდენობა
+        <img [src]="bedroomFilter ? '/assets/down-arrow.svg' : '/assets/up-arrow.svg'"
+             [alt]="bedroomFilter ? 'active-filter' : 'inactive-filter'">
+
+      </button>
+
+      <!-- Template definition for the section -->
+      <ng-template #bedroomSection>
+        <section class="filter-details bedroom-details mt-2" [formGroup]="myForm" (ngSubmit)="onBedroomSubmit()">
+          <h5 class="text-start">საძინებლების რაოდენობა</h5>
+
+          <input type="number" formControlName="bedrooms">
+
+          <button class="primary-button " type="button" (click)="onBedroomSubmit()">არჩევა</button>
+        </section>
+      </ng-template>
+
+      <!-- Conditional rendering of the template -->
+      <ng-container *ngIf="bedroomFilter" [ngTemplateOutlet]="bedroomSection"></ng-container>
 
     </div>
 
@@ -164,5 +189,9 @@
     <li class="filtered-section" *ngIf="littleAreas !== undefined"
         (click)="areaFilterOn()">{{ littleAreas }}
       <img src="assets/x.svg" alt="delete-prices-filter" (click)="deleteAreas()"/></li>
+
+    <li class="filtered-section" *ngIf="littleBedrooms !== undefined"
+        (click)="bedroomFilterOn()">{{ littleBedrooms }}
+      <img src="assets/x.svg" alt="delete-prices-filter" (click)="deleteBedrooms()"/></li>
   </ul>
 </div>

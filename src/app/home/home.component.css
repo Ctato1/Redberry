@@ -212,6 +212,15 @@ input[type="checkbox"] {
   border-radius: 6px;
   border: 1px solid #808A93;
 }
+
+/* card section */
+
+section ul h2{
+  color: rgba(2, 21, 38, 0.80);
+  font-size: 20px;
+  font-weight: 400;
+}
+
 /* For Chrome, Safari, Edge, Opera */
 .bedroom-details input[type="number"]::-webkit-outer-spin-button,
 .bedroom-details input[type="number"]::-webkit-inner-spin-button {

@@ -195,3 +195,14 @@
       <img src="assets/x.svg" alt="delete-prices-filter" (click)="deleteBedrooms()"/></li>
   </ul>
 </div>
+
+
+<section>
+  <ul *ngIf="realEstates !== null">
+    <li *ngFor="let estate of chengableEstates">bedrooms : {{estate.bedrooms}}; price : {{estate.price}}; region : {{estate.city.region.name}}</li>
+    <h2 *ngIf="chengableEstates.length === 0">აღნიშნული მონაცემებით განცხადება არ იძებნება</h2>
+  </ul>
+  <ul *ngIf="realEstates === null">
+    <li> Loading </li>
+  </ul>
+</section>

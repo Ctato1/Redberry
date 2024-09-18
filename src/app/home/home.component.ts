@@ -3,8 +3,29 @@ import {HttpClient} from "@angular/common/http";
 import {Subscription} from "rxjs";
 import {FormBuilder, FormArray, FormControl} from "@angular/forms";
 import {FilterService, RegionProps} from "../shared/filter.service";
-import {GeographicalInformationService} from "../apimodels";
+import {GeographicalInformationService, RealEstatesService} from "../apimodels";
 
+
+export interface EstateProps {
+  id: number,
+  address: string,
+  zip_code: string,
+  price: number,
+  area: number,
+  bedrooms: number,
+  image: string,
+  is_rental: number,
+  city_id: number,
+  city: {
+    id: number,
+    name: string,
+    region_id: number,
+    region: {
+      id: number,
+      name: string
+    }
+  }
+}
 
 @Component({
   selector: 'app-home',
@@ -23,6 +44,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   // data
   regions: RegionProps[] = [];
+  realEstates: EstateProps[] | null= [];
+  chengableEstates: EstateProps[] = [];
 
   // show details
   littleRegions!: string | undefined;
@@ -30,8 +53,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   littleAreas!: string | undefined;
   littleBedrooms!: string | undefined;
 
-
-  prices: any = {min: null, max: null};
 
   myForm = this.fb.group({
     selectedRegions: this.fb.array([]),
@@ -42,7 +63,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     bedrooms: new FormControl(),
   });
 
-  constructor(private http: HttpClient, private fb: FormBuilder, private geographicalInformationService: GeographicalInformationService) {
+  constructor(private realEstatesService: RealEstatesService, private fb: FormBuilder, private geographicalInformationService: GeographicalInformationService) {
   }
 
   ngOnInit() {
@@ -50,7 +71,18 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe((res: RegionProps[]) => {
         this.regions = res;
         this.loadSavedFilters();
+      }, error => {
+        console.log(error)
       });
+
+    this.subscription = this.realEstatesService.realEstatesGet().subscribe(data => {
+      this.realEstates = data.body;
+      this.chengableEstates = data.body;
+      console.log(this.realEstates)
+      this.onSubmit();
+    }, error => {
+      console.log(error)
+    })
   }
 
 
@@ -71,6 +103,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.selectedRegionsFormArray.clear();
     this.littleRegions = undefined;
     localStorage.removeItem('selectedRegions');
+    this.onSubmit();
   }
 
   deletePrices() {
@@ -81,7 +114,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     min.reset();
     max.reset();
     this.littlePrices = undefined;
+    this.onSubmit();
   }
+
   deleteAreas() {
     const min = (this.myForm.get('minArea') as FormArray);
     const max = this.myForm.get('maxArea') as FormArray;
@@ -90,12 +125,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     min.reset();
     max.reset();
     this.littleAreas = undefined;
+    this.onSubmit();
   }
+
   deleteBedrooms() {
     const bedrooms = (this.myForm.get('bedrooms') as FormArray);
+    console.log(bedrooms)
     localStorage.removeItem('selectedBedrooms')
     bedrooms.reset();
     this.littleBedrooms = undefined;
+    this.onSubmit();
   }
 
   getNameId(id: number) {
@@ -130,10 +169,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.myForm.get('maxArea')?.setValue(JSON.parse(savedAreasMax))
       this.myForm.get('minArea')?.setValue(JSON.parse(savedAreasMin))
     }
-    if(savedBedrooms){
+    if (savedBedrooms) {
       this.littleBedrooms = JSON.parse(savedBedrooms);
       this.myForm.get('bedrooms')?.setValue(JSON.parse(savedBedrooms))
     }
+
   }
 
   onCheckboxChange(event: Event) {
@@ -162,9 +202,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   setMaxPrice(value: number) {
     this.myForm.get('maxPrice')?.setValue(value);
   }
+
   setMinArea(value: number) {
     this.myForm.get('minArea')?.setValue(value);
   }
+
   setMaxArea(value: number) {
     this.myForm.get('maxArea')?.setValue(value);
   }
@@ -188,12 +230,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.removeFilters();
     this.priceFilter = !current;
   }
-  areaFilterOn(){
+
+  areaFilterOn() {
     const current: boolean = this.areaFilter;
     this.removeFilters();
     this.areaFilter = !current;
   }
-  bedroomFilterOn(){
+
+  bedroomFilterOn() {
     const current: boolean = this.bedroomFilter;
     this.removeFilters();
     this.bedroomFilter = !current;
@@ -228,7 +272,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
     this.onSubmit();
   }
-  onAreaSubmit(){
+
+  onAreaSubmit() {
     this.areaFilter = false;
     const minArea = this.myForm.get("minArea")?.value;
     const maxArea = this.myForm.get("maxArea")?.value;
@@ -249,15 +294,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.onSubmit();
   }
 
-  onBedroomSubmit(){
+  onBedroomSubmit() {
     this.bedroomFilter = false;
     const bedrooms = this.myForm.get("bedrooms")?.value;
-    if (bedrooms === null) {
-      this.deletePrices()
+    if (bedrooms === null || bedrooms === '' || bedrooms === undefined) {
+      this.deleteBedrooms();
+      return;
     }
     localStorage.setItem('selectedBedrooms', JSON.stringify(bedrooms));
     const savedBedrooms: string | null = localStorage.getItem('selectedBedrooms')
-    if(savedBedrooms){
+    if (savedBedrooms) {
       this.littleBedrooms = JSON.parse(savedBedrooms);
     }
     this.onSubmit();
@@ -265,6 +311,50 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
   onSubmit() {
-    console.log(this.myForm)
+    console.log(this.myForm);
+    if (!Array.isArray(this.realEstates)) {
+      console.error("realEstates is not an array");
+      this.realEstates =  null;
+      return;
+    }else{
+      console.log('not loading')
+    }
+
+    // Get values from the form
+    const selectedRegions = this.selectedRegionsFormArray.value;
+    const bedrooms = this.myForm.get("bedrooms")?.value;
+    const minPrice = this.myForm.get("minPrice")?.value;
+    const maxPrice = this.myForm.get("maxPrice")?.value;
+    const minArea = this.myForm.get("minArea")?.value;
+    const maxArea = this.myForm.get("maxArea")?.value;
+
+    // Start with the entire list of real estates
+    let changedArray: EstateProps[] = [...this.realEstates];
+
+    // Apply bedroom filter if set
+    if (bedrooms) {
+      changedArray = changedArray.filter(item => item.bedrooms === bedrooms);
+    }
+
+    // Apply region filter if regions are selected
+    if (selectedRegions && selectedRegions.length > 0) {
+      changedArray = changedArray.filter(item => selectedRegions.includes(item.city.region.id.toString()));
+    }
+
+    // Apply price filter if min and max price are set
+    if (minPrice !== null && maxPrice !== null) {
+      changedArray = changedArray.filter(item => item.price >= minPrice && item.price <= maxPrice);
+    }
+
+    // Apply area filter if min and max area are set
+    if (minArea !== null && maxArea !== null) {
+      changedArray = changedArray.filter(item => item.area >= minArea && item.area <= maxArea);
+    }
+
+    // Update the chengableEstates array with the filtered results
+    this.chengableEstates = changedArray;
+
+    console.log(selectedRegions);
   }
+
 }

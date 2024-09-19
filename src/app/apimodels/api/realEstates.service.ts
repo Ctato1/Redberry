@@ -34,6 +34,43 @@ import {BASE_PATH, COLLECTION_FORMATS} from '../variables';
 import {Configuration} from '../configuration';
 import {environment} from "../../../enviroments/enviroment";
 
+export interface EstateGetProps {
+  id: number;
+  address: string;
+  image: string;
+  zip_code: string;
+  description: string;
+  price: number;
+  bedrooms: number;
+  area: number;
+  is_rental: boolean;
+  agent_id: number;
+  city_id: number;
+  created_at: string;  // ISO date string
+  city: City;
+  agent: Agent;
+}
+
+interface City {
+  id: number;
+  name: string;
+  region_id: number;
+  region: Region;
+}
+
+interface Region {
+  id: number;
+  name: string;
+}
+
+interface Agent {
+  id: number;
+  name: string;
+  surname: string;
+  email: string;
+  avatar: string;
+  phone: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -233,93 +270,17 @@ export class RealEstatesService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public realEstatesIdGet(id: number, observe?: 'body', reportProgress?: boolean, options?: {
-    httpHeaderAccept?: 'application/json',
-    context?: HttpContext,
-    transferCache?: boolean
-  }): Observable<RealEstatesIdGet200Response>;
-  public realEstatesIdGet(id: number, observe?: 'response', reportProgress?: boolean, options?: {
-    httpHeaderAccept?: 'application/json',
-    context?: HttpContext,
-    transferCache?: boolean
-  }): Observable<HttpResponse<RealEstatesIdGet200Response>>;
-  public realEstatesIdGet(id: number, observe?: 'events', reportProgress?: boolean, options?: {
-    httpHeaderAccept?: 'application/json',
-    context?: HttpContext,
-    transferCache?: boolean
-  }): Observable<HttpEvent<RealEstatesIdGet200Response>>;
-  public realEstatesIdGet(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {
-    httpHeaderAccept?: 'application/json',
-    context?: HttpContext,
-    transferCache?: boolean
-  }): Observable<any> {
-    if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling realEstatesIdGet.');
-    }
 
-    let localVarHeaders = this.defaultHeaders;
+  public realEstatesIdGet(id: number): Observable<any> {
 
-    let localVarCredential: string | undefined;
-    // authentication (bearerAuth) required
-    localVarCredential = this.configuration.lookupCredential('bearerAuth');
-    if (localVarCredential) {
-      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
-    }
-
-    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-    if (localVarHttpHeaderAcceptSelected === undefined) {
-      // to determine the Accept header
-      const httpHeaderAccepts: string[] = [
-        'application/json'
-      ];
-      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    }
-    if (localVarHttpHeaderAcceptSelected !== undefined) {
-      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
-    }
-
-    let localVarHttpContext: HttpContext | undefined = options && options.context;
-    if (localVarHttpContext === undefined) {
-      localVarHttpContext = new HttpContext();
-    }
-
-    let localVarTransferCache: boolean | undefined = options && options.transferCache;
-    if (localVarTransferCache === undefined) {
-      localVarTransferCache = true;
-    }
-
-
-    let responseType_: 'text' | 'json' | 'blob' = 'json';
-    if (localVarHttpHeaderAcceptSelected) {
-      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
-        responseType_ = 'text';
-      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
-        responseType_ = 'json';
-      } else {
-        responseType_ = 'blob';
-      }
-    }
-
-    let localVarPath = `/real-estates/${this.configuration.encodeParam({
-      name: "id",
-      value: id,
-      in: "path",
-      style: "simple",
-      explode: false,
-      dataType: "number",
-      dataFormat: undefined
-    })}`;
-    return this.httpClient.request<RealEstatesIdGet200Response>('get', `${this.configuration.basePath}${localVarPath}`,
-      {
-        context: localVarHttpContext,
-        responseType: <any>responseType_,
-        withCredentials: this.configuration.withCredentials,
-        headers: localVarHeaders,
-        observe: observe,
-        transferCache: localVarTransferCache,
-        reportProgress: reportProgress
-      }
-    );
+    let localVarPath = `/real-estates/`;
+    return this.httpClient.get<EstateGetProps>(`${this.configuration.basePath}${localVarPath}${id}`, {
+      headers: {
+        'Authorization': `Bearer ${this.token}`,
+      },
+      reportProgress: true,
+      observe: 'events'
+    });
   }
 
   /**

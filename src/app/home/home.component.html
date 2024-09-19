@@ -212,7 +212,7 @@
   <!-- data -->
   <ul *ngIf="realEstates !== null" class="real-estate-grid list-unstyled">
     <li *ngFor="let estate of chengableEstates" class="grid-item">
-      <app-estate-card [cardInfo]="estate"></app-estate-card>
+      <app-estate-card [cardInfo]="estate" routerLink="/property/{{estate?.id}}"></app-estate-card>
     </li>
     <h2 *ngIf="chengableEstates.length === 0">
       აღნიშნული მონაცემებით განცხადება არ იძებნება

@@ -180,12 +180,15 @@
 
 
 @media (max-width: 768px) {
+  .property{
+    padding: 0 10px ;
+  }
   .property-image {
-    width: 439px;
-    height: 270px;
+    width: 390px;
+    height: 200px;
   }
   .property-info ul {
-    gap: 16px;
+    gap: 12px;
     flex-direction:column;
   }
 
@@ -194,4 +197,27 @@
     font-weight: 500;
   }
 
+  .property-info li {
+    font-size: 20px;
+  }
+
+  .property-info li img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .property-description {
+    font-size: 14px;
+    line-height: 21px;
+  }
+  .image-info p {
+    color: #808A93;
+    font-size: 14px;
+  }
+
+}
+@media (max-width: 426px){
+  .property-image {
+    width: 290px;
+  }
 }

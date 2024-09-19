@@ -5,26 +5,37 @@ input[type="checkbox"] {
 }
 
 .main-section {
+  width: 90%;
   max-width: 1596px;
   margin: 0 auto;
-  padding: 0 0 0 30px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+  padding: 0 0px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.btn-sections{
-  display:flex;
-  justify-content:space-between;
-  align-items: flex-end; /* Align the buttons to the right */
+.btn-sections {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
   gap: 16px;
-  margin-right: -20px;
 }
 
-.little-filters{
+.btn-sections .primary-button {
+  padding: 10px 16px;
+  font-size: 16px;
+}
+
+.btn-sections .secondary-button {
+  padding: 10px 16px;
+  font-size: 16px;
+}
+
+.little-filters {
+  width: 90%;
   max-width: 1596px;
   margin: 0 auto;
-  padding: 0 30px;
+  padding: 0 0px;
 }
 
 .filter {
@@ -43,14 +54,21 @@ input[type="checkbox"] {
   gap: 24px;
 }
 
-.filter-button{
+.filter-button-2,
+.filter-button-3,
+.filter-button-4{
+  margin-left: 18px;
+}
+
+.filter-button {
   padding: 8px 14px;
   color: #021526;
   text-align: center;
   font-size: 16px;
   font-weight: 500;
 }
-.filter-button img{
+
+.filter-button img {
   margin-left: 4px;
 }
 
@@ -112,9 +130,9 @@ input[type="checkbox"] {
   /*display: grid;*/
   /*grid-template-columns: repeat(4, 1fr);*/
   /*gap: 1rem;*/
-  display:flex;
-  align-items:center;
-  flex-wrap:wrap;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
   width: fit-content;
 }
@@ -124,7 +142,7 @@ input[type="checkbox"] {
   border: 1px solid #DBDBDB;
   border-radius: 43px;
   background: #FFF;
-  width:fit-content;
+  width: fit-content;
 }
 
 .filtered-section img {
@@ -136,7 +154,7 @@ input[type="checkbox"] {
 .price-details {
   width: 382px;
   padding: 24px;
-  margin-left: 108px;
+  margin-left: 134px;
 }
 
 .price-details b {
@@ -172,15 +190,16 @@ input[type="checkbox"] {
   margin-bottom: 24px;
 }
 
-.price-error{
+.price-error {
   width: 400px;
-  position:absolute;
+  position: absolute;
   bottom: -20px;
   left: 0px;
   color: #F93B1D;
   font-size: 12px;
   font-weight: 400;
 }
+
 .input-wrapper input[type="number"] {
   padding-right: 20px; /* Adjust to leave space for the plus sign */
 
@@ -206,7 +225,7 @@ input[type="checkbox"] {
 .area-details {
   width: 382px;
   padding: 24px;
-  margin-left: 305px;
+  margin-left: 355px;
 }
 
 
@@ -215,14 +234,15 @@ input[type="checkbox"] {
   color: green;
   font-weight: 500;
 }
+
 /* bedroom details */
 .bedroom-details {
   width: 282px;
   padding: 24px;
-  margin-left: 420px;
+  margin-left: 505px;
 }
 
-.bedroom-details input{
+.bedroom-details input {
   width: 41px;
   padding: 10px;
   color: rgba(2, 21, 38, 0.40);
@@ -235,7 +255,7 @@ input[type="checkbox"] {
 
 /* card section */
 
-section ul h2{
+section ul h2 {
   color: rgba(2, 21, 38, 0.80);
   font-size: 20px;
   font-weight: 400;
@@ -255,10 +275,11 @@ section ul h2{
 
 /* estates */
 
-.estates-section{
+.estates-section {
+  width: 100%;
   max-width: 1596px;
-  margin: 0 auto;
-  padding: 0 30px;
+  margin: 41px auto;
+  padding: 0 0px;
 }
 
 .real-estate-grid {
@@ -273,40 +294,58 @@ section ul h2{
   justify-content: center;
   width: 100%;
 }
+
 @media (max-width: 1600px) {
   .real-estate-grid {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 1350px){
+  .main-section{
+    flex-direction: column;
+    gap: 20px;
   }
 }
 @media (max-width: 1300px) {
   .real-estate-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  .filter .filter-button:nth-child(2) ,
+  .filter .filter-button:nth-child(3),
+  .filter .filter-button:nth-child(4){
+    margin-left: 3px;
+  }
 }
 
 @media (max-width: 768px) {
   .main-section {
-    flex-direction:column;
+    flex-direction: column;
   }
+
   .regions {
     width: 380px;
   }
+
   .real-estate-grid {
     grid-template-columns: repeat(1, 1fr);
   }
+
   .region-details {
     width: fit-content;
     margin-left: 0px;
   }
+
   .price-details {
     width: 300px;
     margin-left: 0px;
   }
+
   .area-details {
     width: 300px;
     margin-left: 0px;
   }
-  .bedroom-details{
+
+  .bedroom-details {
     width: 300px;
     margin-left: 0px;
   }
@@ -326,19 +365,24 @@ section ul h2{
   .choose-btn {
     align-self: center;
   }
+
   .region-details {
     width: 220px;
   }
+
   .price-details {
     width: 200px;
   }
+
   .area-details {
     width: 200px;
   }
-  .bedroom-details{
+
+  .bedroom-details {
     width: 200px;
   }
+
   .price-section {
-    flex-direction:column;
+    flex-direction: column;
   }
 }

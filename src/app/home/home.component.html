@@ -1,3 +1,10 @@
+<app-add-agent
+  [message]="'აგენტის დამატება'"
+  *ngIf="selectedAgent !== null"
+  (close)="onHandleClose()"
+></app-add-agent>
+
+
 <app-header></app-header>
 
 <main class="main-section mt-5">
@@ -174,6 +181,10 @@
 
   </form>
 
+  <div class="btn-sections">
+    <button class="primary-button" routerLink="listing">+ ლისტინგის დამატება</button>
+    <button class="secondary-button" (click)="selectedAgent = 1">+ აგენტის დამატება</button>
+  </div>
 
 
 </main>

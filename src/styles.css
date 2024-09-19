@@ -22,10 +22,11 @@ body {
   color: #fff;
   padding: 10px;
   align-items: center;
+  text-align: center;
   border-radius: 10px;
   font-size: 1rem;
   font-weight: 500;
-  border: none;
+  border: 1px solid transparent;
 }
 .secondary-button {
   background: transparent;
@@ -34,8 +35,8 @@ body {
   color: #F93B1D;
   text-align: center;
   font-size: 16px;
-  font-style: normal;
   border-radius: 10px;
+  font-weight: 500;
   border: 1px solid #F93B1D;
 }
 .filter-btn {

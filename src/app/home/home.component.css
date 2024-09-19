@@ -7,11 +7,20 @@ input[type="checkbox"] {
 .main-section {
   max-width: 1596px;
   margin: 0 auto;
-  padding: 0 30px;
+  padding: 0 0 0 30px;
   display:flex;
   align-items:center;
   justify-content:space-between;
 }
+
+.btn-sections{
+  display:flex;
+  justify-content:space-between;
+  align-items: flex-end; /* Align the buttons to the right */
+  gap: 16px;
+  margin-right: -20px;
+}
+
 .little-filters{
   max-width: 1596px;
   margin: 0 auto;

@@ -33,6 +33,9 @@ export interface EstateProps {
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  // agent modal
+  selectedAgent: number | null = null; // Default agent
+
   // select buttons flags
   regionFilter: boolean = false;
   priceFilter: boolean = false;
@@ -378,7 +381,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     console.log(selectedRegions);
   }
 
-
+  onHandleClose() {
+    this.selectedAgent = null;
+  }
   // best filter (filter by all)
   // onSubmit() {
   //   console.log(this.myForm);

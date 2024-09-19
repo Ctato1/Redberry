@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { AgentProps, CitiesProps, RegionProps } from "../shared/filter.service";
-import { AgentsService, GeographicalInformationService, RealEstatesService } from "../apimodels";
-import { MessageService } from "primeng/api";
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {AgentProps, CitiesProps, RegionProps} from "../shared/filter.service";
+import {AgentsService, GeographicalInformationService, RealEstatesService} from "../apimodels";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-listing',
@@ -11,7 +11,7 @@ import { MessageService } from "primeng/api";
 })
 
 export class ListingComponent implements OnInit {
-  types = [{ name: 'იყიდება', value: false }, { name: 'ქირავდება', value: true }]; // Listing types
+  types = [{name: 'იყიდება', value: false}, {name: 'ქირავდება', value: true}]; // Listing types
   listingForm!: FormGroup; // Main form group
 
   // Dropdown data
@@ -29,7 +29,8 @@ export class ListingComponent implements OnInit {
     private messageService: MessageService,
     private agentService: AgentsService,
     private geographicalInformationService: GeographicalInformationService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.initForm(); // Initialize form structure
@@ -50,13 +51,14 @@ export class ListingComponent implements OnInit {
         'price': new FormControl(null, [Validators.required, Validators.pattern("^[0-9]*$")]),
         'area': new FormControl(null, [Validators.required, Validators.pattern("^[0-9]*$")]),
         'bedroom': new FormControl(null, [Validators.required, Validators.pattern("^[0-9]*$")]),
-        'description': new FormControl(null, [Validators.required,    this.correctDescription.bind(this)]),
+        'description': new FormControl(null, [Validators.required, this.correctDescription.bind(this)]),
         'photo': new FormControl(null, [Validators.required]),
       }),
       'types': new FormControl(this.types[0]), // Default type
       'agent': new FormControl(null, [Validators.required]),
     });
   }
+
   // Method to reset the form
   onReset() {
     this.listingForm.reset({
@@ -78,6 +80,7 @@ export class ListingComponent implements OnInit {
     });
     this.clearSelectedFile();
   }
+
   correctDescription(control: FormControl): { [s: string]: boolean } | null {
     if (!control.value) {
       // If control value is null or undefined, return no error
@@ -85,7 +88,7 @@ export class ListingComponent implements OnInit {
     }
 
     if (control.value.split(' ').length < 5) {
-      return { 'wrongWords': true };
+      return {'wrongWords': true};
     }
 
     return null;
@@ -106,9 +109,9 @@ export class ListingComponent implements OnInit {
     this.fetchAgents();
   }
 
-  fetchAgents(){
+  fetchAgents() {
     this.agentService.agentsGet().subscribe((agents) => {
-      this.agents = [{ name: 'დაამატე აგენტი', id: null }, ...agents]; // Add 'Add Agent' option
+      this.agents = [{name: 'დაამატე აგენტი', id: null}, ...agents]; // Add 'Add Agent' option
       this.tryPatchForm(); // Check and patch form after agents are fetched
     });
   }
@@ -145,7 +148,10 @@ export class ListingComponent implements OnInit {
 
       // check if the saved type exists in the types array and set it
       if (parsedData.types) {
-        const type : {name:string, value:boolean} | undefined = this.types.find((t) => t.value === parsedData.types.value);
+        const type: {
+          name: string,
+          value: boolean
+        } | undefined = this.types.find((t) => t.value === parsedData.types.value);
         if (type) {
           this.listingForm.get('types')?.setValue(type);
         }
@@ -170,17 +176,29 @@ export class ListingComponent implements OnInit {
     // Check if image is a valid file type
     const image = formData.details.photo;
     if (!(image instanceof Blob || image instanceof File)) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Invalid image type. Please select a valid file.'});
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: "Invalid image type. Please select a valid file.",
+        styleClass: 'my-custom-error',
+        life: 3000
+      });
       return;
     }
 
     // Ensure required fields are filled before submitting
-    const { address, zip, region, city } = formData.location;
-    const { price, area, bedroom, description } = formData.details;
+    const {address, zip, region, city} = formData.location;
+    const {price, area, bedroom, description} = formData.details;
     const agent = formData.agent;
 
     if (!address || !region?.id || !city?.id || !price || !area || !bedroom || !description || !agent?.id) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please fill all the required fields.' });
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Please fill all the required fields.',
+        styleClass: 'my-custom-error',
+        life: 3000
+      });
       return;
     }
 
@@ -190,12 +208,34 @@ export class ListingComponent implements OnInit {
     ).subscribe(
       (event) => {
         if (event.type === 4) { // Handle final response event
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Real estate posted successfully' });
+          this.messageService.add({
+            severity: 'success', summary: 'Success', detail: 'Real estate posted successfully',
+            styleClass: 'my-custom-success',
+            life: 3000
+          });
           this.onReset();
         }
       },
       (err) => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: err?.error?.message });
+        if (err?.error?.message) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: err?.error?.message,
+            styleClass: 'my-custom-error',
+            life: 3000
+          });
+        } else {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: "Something went wrong, Check Input Fields",
+            styleClass: 'my-custom-error',
+            life: 3000
+          });
+        }
+
+
       }
     );
   }

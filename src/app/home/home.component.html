@@ -10,8 +10,8 @@
               [ngClass]="{'filter-act-btn': regionFilter, 'filter-btn': !regionFilter}"
               (click)="regionFilterOn()">
         რეგიონი
-        <img [src]="regionFilter ? '/assets/down-arrow.svg' : '/assets/up-arrow.svg'"
-             [alt]="regionFilter ? 'active-filter' : 'inactive-filter'">
+        <img [src]="!regionFilter ? '/assets/down-arrow.svg' : '/assets/up-arrow.svg'"
+             [alt]="!regionFilter ? 'active-filter' : 'inactive-filter'">
 
       </button>
       <!-- Template definition for the section -->
@@ -45,8 +45,8 @@
               [ngClass]="{'filter-act-btn': priceFilter, 'filter-btn': !priceFilter}"
               (click)="priceFilterOn()">
         საფასო კატეგორია
-        <img [src]="priceFilter ? '/assets/down-arrow.svg' : '/assets/up-arrow.svg'"
-             [alt]="priceFilter ? 'active-filter' : 'inactive-filter'">
+        <img [src]="!priceFilter ? '/assets/down-arrow.svg' : '/assets/up-arrow.svg'"
+             [alt]="!priceFilter ? 'active-filter' : 'inactive-filter'">
 
       </button>
 
@@ -98,8 +98,8 @@
               [ngClass]="{'filter-act-btn': areaFilter, 'filter-btn': !areaFilter}"
               (click)="areaFilterOn()">
         ფართობი
-        <img [src]="areaFilter ? '/assets/down-arrow.svg' : '/assets/up-arrow.svg'"
-             [alt]="areaFilter ? 'active-filter' : 'inactive-filter'">
+        <img [src]="!areaFilter ? '/assets/down-arrow.svg' : '/assets/up-arrow.svg'"
+             [alt]="!areaFilter ? 'active-filter' : 'inactive-filter'">
 
       </button>
 
@@ -151,8 +151,8 @@
               [ngClass]="{'filter-act-btn': bedroomFilter, 'filter-btn': !bedroomFilter}"
               (click)="bedroomFilterOn()">
         საძინებლების რაოდენობა
-        <img [src]="bedroomFilter ? '/assets/down-arrow.svg' : '/assets/up-arrow.svg'"
-             [alt]="bedroomFilter ? 'active-filter' : 'inactive-filter'">
+        <img [src]="!bedroomFilter ? '/assets/down-arrow.svg' : '/assets/up-arrow.svg'"
+             [alt]="!bedroomFilter ? 'active-filter' : 'inactive-filter'">
 
       </button>
 
@@ -197,12 +197,19 @@
 </div>
 
 
-<section>
-  <ul *ngIf="realEstates !== null">
-    <li *ngFor="let estate of chengableEstates">bedrooms : {{estate.bedrooms}}; price : {{estate.price}}; region : {{estate.city.region.name}}</li>
-    <h2 *ngIf="chengableEstates.length === 0">აღნიშნული მონაცემებით განცხადება არ იძებნება</h2>
+<section class="estates-section">
+  <!-- data -->
+  <ul *ngIf="realEstates !== null" class="real-estate-grid list-unstyled">
+    <li *ngFor="let estate of chengableEstates" class="grid-item">
+      <app-estate-card [cardInfo]="estate"></app-estate-card>
+    </li>
+    <h2 *ngIf="chengableEstates.length === 0">
+      აღნიშნული მონაცემებით განცხადება არ იძებნება
+    </h2>
   </ul>
-  <ul *ngIf="realEstates === null">
+
+  <!-- loading -->
+  <ul *ngIf="realEstates === null"  class="list-unstyled">
     <li> Loading </li>
   </ul>
 </section>

@@ -1,0 +1,13 @@
+<div class="card">
+  <span class="card-rental">{{cardInfo.is_rental === 0 ? 'იყიდება' : 'ქირავდება'}}</span>
+  <img class="card-image" src="{{cardInfo.image}}" alt="{{cardInfo.city.region}} estate">
+  <div class="card-info">
+    <h2>{{ cardInfo.price | numberConverter }} ₾</h2>
+    <p class="card-address"><img src="assets/location-marker.svg" alt="location"> {{ cardInfo.address }}</p>
+    <p class="card-details">
+      <span><img src="assets/bed.svg" alt="bed"/>{{ cardInfo.bedrooms }}</span>
+      <span><img src="assets/Vector.svg" alt="area"/>{{ cardInfo.area }}</span>
+      <span><img src="assets/Vector2.svg" alt="zip code"/>{{ cardInfo.zip_code }}</span>
+    </p>
+  </div>
+</div>

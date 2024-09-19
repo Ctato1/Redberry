@@ -5,7 +5,7 @@ input[type="checkbox"] {
 }
 
 .main-section {
-  max-width: 1700px;
+  max-width: 1596px;
   margin: 0 auto;
   padding: 0 30px;
   display:flex;
@@ -13,7 +13,7 @@ input[type="checkbox"] {
   justify-content:space-between;
 }
 .little-filters{
-  max-width: 1700px;
+  max-width: 1596px;
   margin: 0 auto;
   padding: 0 30px;
 }
@@ -32,6 +32,17 @@ input[type="checkbox"] {
   background: transparent;
   padding: 6px;
   gap: 24px;
+}
+
+.filter-button{
+  padding: 8px 14px;
+  color: #021526;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+}
+.filter-button img{
+  margin-left: 4px;
 }
 
 .filter-details {
@@ -232,6 +243,38 @@ section ul h2{
 .bedroom-details input[type="number"] {
   -moz-appearance: textfield;
 }
+
+/* estates */
+
+.estates-section{
+  max-width: 1596px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+
+.real-estate-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns by default */
+  gap: 20px;
+  padding: 0;
+}
+
+.grid-item {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+@media (max-width: 1600px) {
+  .real-estate-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 1300px) {
+  .real-estate-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
   .main-section {
     flex-direction:column;
@@ -239,7 +282,9 @@ section ul h2{
   .regions {
     width: 380px;
   }
-
+  .real-estate-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
   .region-details {
     width: fit-content;
     margin-left: 0px;

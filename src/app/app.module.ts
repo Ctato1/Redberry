@@ -17,6 +17,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { AddAgentComponent } from './shared/add-agent/add-agent.component';
 import {MessageService} from "primeng/api";
 import {ToastModule} from "primeng/toast";
+import { EstateCardComponent } from './home/estate-card/estate-card.component';
+import { NumberConverterPipe } from './shared/pipes/number-converter.pipe';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import {ToastModule} from "primeng/toast";
     PropertyComponent,
     ListingComponent,
     HeaderComponent,
-    AddAgentComponent
+    AddAgentComponent,
+    EstateCardComponent,
+    NumberConverterPipe
   ],
   imports: [
     BrowserModule,

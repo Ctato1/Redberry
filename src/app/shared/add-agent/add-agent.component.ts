@@ -56,6 +56,7 @@ export class AddAgentComponent implements OnInit{
     this.agentsService.agentsPost(name, lastname, email, number,photo ).subscribe((event) => {
       if (event.type === 4) { // Handle final response event
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Real estate posted successfully' });
+        this.onClose();
       }
     },(error)=>{
       this.messageService.add({ severity: 'error', summary: 'Error', detail: error?.error?.message });

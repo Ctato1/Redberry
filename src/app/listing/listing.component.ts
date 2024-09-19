@@ -57,6 +57,27 @@ export class ListingComponent implements OnInit {
       'agent': new FormControl(null, [Validators.required]),
     });
   }
+  // Method to reset the form
+  onReset() {
+    this.listingForm.reset({
+      location: {
+        address: null,
+        zip: null,
+        region: null,
+        city: null,
+      },
+      details: {
+        price: null,
+        area: null,
+        bedroom: null,
+        description: null,
+        photo: null,
+      },
+      types: this.types[0],
+      agent: null,
+    });
+    this.clearSelectedFile();
+  }
   correctDescription(control: FormControl): { [s: string]: boolean } | null {
     if (!control.value) {
       // If control value is null or undefined, return no error
@@ -82,6 +103,10 @@ export class ListingComponent implements OnInit {
       this.tryPatchForm(); // Check and patch form after cities are fetched
     });
 
+    this.fetchAgents();
+  }
+
+  fetchAgents(){
     this.agentService.agentsGet().subscribe((agents) => {
       this.agents = [{ name: 'დაამატე აგენტი', id: null }, ...agents]; // Add 'Add Agent' option
       this.tryPatchForm(); // Check and patch form after agents are fetched
@@ -166,6 +191,7 @@ export class ListingComponent implements OnInit {
       (event) => {
         if (event.type === 4) { // Handle final response event
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Real estate posted successfully' });
+          this.onReset();
         }
       },
       (err) => {
@@ -230,5 +256,6 @@ export class ListingComponent implements OnInit {
   // Close the agent modal
   onHandleClose() {
     this.selectedAgent = 0.001;
+    this.fetchAgents();
   }
 }

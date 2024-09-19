@@ -309,15 +309,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.onSubmit();
   }
 
-
+  // filter by one
   onSubmit() {
     console.log(this.myForm);
     if (!Array.isArray(this.realEstates)) {
       console.error("realEstates is not an array");
-      this.realEstates =  null;
+      this.realEstates = null;
       return;
-    }else{
-      console.log('not loading')
+    } else {
+      console.log('not loading');
     }
 
     // Get values from the form
@@ -328,33 +328,103 @@ export class HomeComponent implements OnInit, OnDestroy {
     const minArea = this.myForm.get("minArea")?.value;
     const maxArea = this.myForm.get("maxArea")?.value;
 
-    // Start with the entire list of real estates
-    let changedArray: EstateProps[] = [...this.realEstates];
+    // Check if any filters are applied
+    const noFiltersApplied = !bedrooms && (!selectedRegions || selectedRegions.length === 0) &&
+      (minPrice === null || maxPrice === null) &&
+      (minArea === null || maxArea === null);
 
-    // Apply bedroom filter if set
-    if (bedrooms) {
-      changedArray = changedArray.filter(item => item.bedrooms === bedrooms);
+    // If no filters are applied, show all real estate data
+    if (noFiltersApplied) {
+      this.chengableEstates = [...this.realEstates];  // Show all data
+      return;
     }
 
-    // Apply region filter if regions are selected
-    if (selectedRegions && selectedRegions.length > 0) {
-      changedArray = changedArray.filter(item => selectedRegions.includes(item.city.region.id.toString()));
-    }
+    // Start with an empty list, and we will push items that match any filter
+    let changedArray: EstateProps[] = [];
 
-    // Apply price filter if min and max price are set
-    if (minPrice !== null && maxPrice !== null) {
-      changedArray = changedArray.filter(item => item.price >= minPrice && item.price <= maxPrice);
-    }
+    // Loop through all real estate items
+    this.realEstates.forEach((item) => {
+      let isMatch = false;
 
-    // Apply area filter if min and max area are set
-    if (minArea !== null && maxArea !== null) {
-      changedArray = changedArray.filter(item => item.area >= minArea && item.area <= maxArea);
-    }
+      // Apply bedroom filter if set
+      if (bedrooms && item.bedrooms === bedrooms) {
+        isMatch = true;
+      }
+
+      // Apply region filter if regions are selected
+      if (selectedRegions && selectedRegions.length > 0 && selectedRegions.includes(item.city.region.id.toString())) {
+        isMatch = true;
+      }
+
+      // Apply price filter if min and max price are set
+      if (minPrice !== null && maxPrice !== null && item.price >= minPrice && item.price <= maxPrice) {
+        isMatch = true;
+      }
+
+      // Apply area filter if min and max area are set
+      if (minArea !== null && maxArea !== null && item.area >= minArea && item.area <= maxArea) {
+        isMatch = true;
+      }
+
+      // If any of the filters matched, include the item
+      if (isMatch) {
+        changedArray.push(item);
+      }
+    });
 
     // Update the chengableEstates array with the filtered results
     this.chengableEstates = changedArray;
 
     console.log(selectedRegions);
   }
+
+
+  // best filter (filter by all)
+  // onSubmit() {
+  //   console.log(this.myForm);
+  //   if (!Array.isArray(this.realEstates)) {
+  //     console.error("realEstates is not an array");
+  //     this.realEstates =  null;
+  //     return;
+  //   }else{
+  //     console.log('not loading')
+  //   }
+  //
+  //   // Get values from the form
+  //   const selectedRegions = this.selectedRegionsFormArray.value;
+  //   const bedrooms = this.myForm.get("bedrooms")?.value;
+  //   const minPrice = this.myForm.get("minPrice")?.value;
+  //   const maxPrice = this.myForm.get("maxPrice")?.value;
+  //   const minArea = this.myForm.get("minArea")?.value;
+  //   const maxArea = this.myForm.get("maxArea")?.value;
+  //
+  //   // Start with the entire list of real estates
+  //   let changedArray: EstateProps[] = [...this.realEstates];
+  //
+  //   // Apply bedroom filter if set
+  //   if (bedrooms) {
+  //     changedArray = changedArray.filter(item => item.bedrooms === bedrooms);
+  //   }
+  //
+  //   // Apply region filter if regions are selected
+  //   if (selectedRegions && selectedRegions.length > 0) {
+  //     changedArray = changedArray.filter(item => selectedRegions.includes(item.city.region.id.toString()));
+  //   }
+  //
+  //   // Apply price filter if min and max price are set
+  //   if (minPrice !== null && maxPrice !== null) {
+  //     changedArray = changedArray.filter(item => item.price >= minPrice && item.price <= maxPrice);
+  //   }
+  //
+  //   // Apply area filter if min and max area are set
+  //   if (minArea !== null && maxArea !== null) {
+  //     changedArray = changedArray.filter(item => item.area >= minArea && item.area <= maxArea);
+  //   }
+  //
+  //   // Update the chengableEstates array with the filtered results
+  //   this.chengableEstates = changedArray;
+  //
+  //   console.log(selectedRegions);
+  // }
 
 }

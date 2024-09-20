@@ -1,0 +1,16 @@
+<div class="backdrop" (click)="onClose()"></div>
+<div class="alert-box">
+  <div class="alert-box-actions">
+    <img src="assets/close.svg" alt="close modal" (click)="onClose()" class="close-modal">
+
+    <div class="main-modal">
+      <h2>გსურთ წაშალოთ ლისტინგი?</h2>
+
+      <div class="btn-section">
+        <button class="secondary-button" (click)="onClose()">გაუქმება</button>
+        <button class="primary-button" (click)="onSubmit()">დადასტურება</button>
+      </div>
+    </div>
+
+  </div>
+</div>

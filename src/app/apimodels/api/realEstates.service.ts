@@ -177,93 +177,18 @@ export class RealEstatesService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public realEstatesIdDelete(id: number, observe?: 'body', reportProgress?: boolean, options?: {
-    httpHeaderAccept?: 'application/json',
-    context?: HttpContext,
-    transferCache?: boolean
-  }): Observable<RealEstatesIdDelete200Response>;
-  public realEstatesIdDelete(id: number, observe?: 'response', reportProgress?: boolean, options?: {
-    httpHeaderAccept?: 'application/json',
-    context?: HttpContext,
-    transferCache?: boolean
-  }): Observable<HttpResponse<RealEstatesIdDelete200Response>>;
-  public realEstatesIdDelete(id: number, observe?: 'events', reportProgress?: boolean, options?: {
-    httpHeaderAccept?: 'application/json',
-    context?: HttpContext,
-    transferCache?: boolean
-  }): Observable<HttpEvent<RealEstatesIdDelete200Response>>;
-  public realEstatesIdDelete(id: number, observe: any = 'body', reportProgress: boolean = false, options?: {
-    httpHeaderAccept?: 'application/json',
-    context?: HttpContext,
-    transferCache?: boolean
-  }): Observable<any> {
-    if (id === null || id === undefined) {
-      throw new Error('Required parameter id was null or undefined when calling realEstatesIdDelete.');
-    }
 
-    let localVarHeaders = this.defaultHeaders;
-
-    let localVarCredential: string | undefined;
-    // authentication (bearerAuth) required
-    localVarCredential = this.configuration.lookupCredential('bearerAuth');
-    if (localVarCredential) {
-      localVarHeaders = localVarHeaders.set('Authorization', 'Bearer ' + localVarCredential);
-    }
-
-    let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-    if (localVarHttpHeaderAcceptSelected === undefined) {
-      // to determine the Accept header
-      const httpHeaderAccepts: string[] = [
-        'application/json'
-      ];
-      localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-    }
-    if (localVarHttpHeaderAcceptSelected !== undefined) {
-      localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
-    }
-
-    let localVarHttpContext: HttpContext | undefined = options && options.context;
-    if (localVarHttpContext === undefined) {
-      localVarHttpContext = new HttpContext();
-    }
-
-    let localVarTransferCache: boolean | undefined = options && options.transferCache;
-    if (localVarTransferCache === undefined) {
-      localVarTransferCache = true;
-    }
+  public realEstatesIdDelete(id: number): Observable<any> {
 
 
-    let responseType_: 'text' | 'json' | 'blob' = 'json';
-    if (localVarHttpHeaderAcceptSelected) {
-      if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
-        responseType_ = 'text';
-      } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
-        responseType_ = 'json';
-      } else {
-        responseType_ = 'blob';
-      }
-    }
-
-    let localVarPath = `/real-estates/${this.configuration.encodeParam({
-      name: "id",
-      value: id,
-      in: "path",
-      style: "simple",
-      explode: false,
-      dataType: "number",
-      dataFormat: undefined
-    })}`;
-    return this.httpClient.request<RealEstatesIdDelete200Response>('delete', `${this.configuration.basePath}${localVarPath}`,
-      {
-        context: localVarHttpContext,
-        responseType: <any>responseType_,
-        withCredentials: this.configuration.withCredentials,
-        headers: localVarHeaders,
-        observe: observe,
-        transferCache: localVarTransferCache,
-        reportProgress: reportProgress
-      }
-    );
+    let localVarPath = `/real-estates/`;
+    return this.httpClient.delete(`${this.configuration.basePath}${localVarPath}${id}`, {
+      headers: {
+        'Authorization': `Bearer ${this.token}`,
+      },
+      reportProgress: true,
+      observe: 'events'
+    });
   }
 
   /**

@@ -1,0 +1,49 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(2, 21, 38, 0.34);
+  backdrop-filter: blur(5px);
+  z-index: 50;
+}
+
+.alert-box {
+  position: fixed;
+  padding: 138px 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #FFF;
+  box-sizing: border-box;
+  z-index: 100;
+  width: 623px;
+  height: 222px;
+  border-radius: 20px;
+  box-shadow: 5px 5px 12px 0px rgba(2, 21, 38, 0.08);
+  display:flex;
+  align-items:center;
+  justify-content: center;
+}
+
+.close-modal{
+  position:absolute;
+  top: 6px;
+  right: 13px;
+  cursor:pointer;
+}
+h2{
+  color: #2D3648;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.btn-section{
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  margin-top: 35px;
+  gap: 15px;
+}
+

@@ -14,6 +14,7 @@ import { catchError, switchMap } from 'rxjs/operators';
 })
 export class PropertyComponent implements OnInit {
   id: string | null = null;
+  showModal!:null | number;
   currentEstate!: EstateGetProps;
   similarEstates: EstateProps[] = [];
   responsiveOptions: { breakpoint: string, numVisible: number, numScroll: number }[] = [];
@@ -28,6 +29,13 @@ export class PropertyComponent implements OnInit {
   ngOnInit(): void {
     this.setupResponsiveOptions(); // Centralized responsive options
     this.handleRouteChanges(); // Handle route changes and fetch data
+  }
+
+  showDeleteModal(){
+    this.showModal = 1;
+  }
+  onHandleModal(){
+    this.showModal = null;
   }
 
   // Setup responsive options

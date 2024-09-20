@@ -22,6 +22,7 @@ import { NumberConverterPipe } from './shared/pipes/number-converter.pipe';
 import {CarouselModule} from "primeng/carousel";
 import {ButtonModule} from "primeng/button";
 import {TagModule} from "primeng/tag";
+import { DeleteModalComponent } from './shared/delete-modal/delete-modal.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {TagModule} from "primeng/tag";
     HeaderComponent,
     AddAgentComponent,
     EstateCardComponent,
-    NumberConverterPipe
+    NumberConverterPipe,
+    DeleteModalComponent
   ],
   imports: [
     BrowserModule,

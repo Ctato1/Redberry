@@ -1,5 +1,10 @@
-<app-header></app-header>
+<app-delete-modal
+  [id]="id"
+  *ngIf="showModal"
+  (close)="onHandleModal()"
+></app-delete-modal>
 
+<app-header></app-header>
 
 <main class="property">
   <img class="back-btn" src="assets/left-icon.svg" alt="back page" (click)="goBack()">
@@ -37,7 +42,7 @@
         </div>
       </div>
 
-      <button class="delete-btn">ლისტინგის წაშლა</button>
+      <button class="delete-btn" (click)="showDeleteModal()">ლისტინგის წაშლა</button>
     </div>
   </div>
 
@@ -46,22 +51,28 @@
 <div class="similar-estates">
   <h2>ბინები მსგავს ლოკაციაზე</h2>
 
-  <p-carousel
-    [value]="similarEstates"
-    [numVisible]="4"
-    [numScroll]="2"
-    [circular]="true"
-    [responsiveOptions]="responsiveOptions"
-    [showIndicators]="false"
+  <div *ngIf="similarEstates.length !== 0">
+    <p-carousel
+      [value]="similarEstates"
+      [numVisible]="4"
+      [numScroll]="2"
+      [circular]="true"
+      [responsiveOptions]="responsiveOptions"
+      [showIndicators]="false"
 
-    autoplayInterval="10000"
-    styleClass="custom-carousel">
+      autoplayInterval="10000"
+      styleClass="custom-carousel">
 
-    <ng-template let-product pTemplate="item">
-      <div class="product-item surface-border m-0 p-0">
+      <ng-template let-product pTemplate="item">
+        <div class="product-item surface-border m-0 p-0">
           <app-estate-card [cardInfo]="product" (click)="navigateToLink(product?.id)"></app-estate-card>
-      </div>
-    </ng-template>
-  </p-carousel>
+        </div>
+      </ng-template>
+    </p-carousel>
+  </div>
+  <div *ngIf="similarEstates.length === 0">
+      <h2>არ მოიძებნა მსგავსი ბინები აღნიშნულ ლოკაციაზე</h2>
+  </div>
+
 </div>
 

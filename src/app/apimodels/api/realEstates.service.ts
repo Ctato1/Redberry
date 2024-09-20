@@ -33,6 +33,7 @@ import {RealEstatesPost201Response} from '../model/realEstatesPost201Response';
 import {BASE_PATH, COLLECTION_FORMATS} from '../variables';
 import {Configuration} from '../configuration';
 import {environment} from "../../../enviroments/enviroment";
+import {EstateProps} from "../../home/home.component";
 
 export interface EstateGetProps {
   id: number;
@@ -159,7 +160,7 @@ export class RealEstatesService {
    */
   public realEstatesGet(): Observable<any> {
     let localVarPath = `/real-estates`;
-    return this.httpClient.get(`${this.configuration.basePath}${localVarPath}`,
+    return this.httpClient.get<EstateProps[]>(`${this.configuration.basePath}${localVarPath}`,
       {
         headers: {
           'Authorization': `Bearer ${this.token}`,

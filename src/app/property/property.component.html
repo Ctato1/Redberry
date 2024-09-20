@@ -6,40 +6,62 @@
 
   <div class="property-section">
     <div class="image-info">
-      <img class="property-image" src="{{currentEstate.image}}"
-           alt="price of this estate is {{currentEstate.price | numberConverter}}"/>
-      <p>გამოქვეყნების თარიღი {{ currentEstate.created_at | date:'MM/dd/yy' }}</p>
+      <img class="property-image" src="{{currentEstate?.image}}"
+           alt="price of this estate is {{currentEstate?.price | numberConverter}}"/>
+      <p>გამოქვეყნების თარიღი {{ currentEstate?.created_at | date:'MM/dd/yy' }}</p>
     </div>
 
     <div class="property-info">
-      <h2 class="price">{{ currentEstate.price | number }} ₾</h2>
+      <h2 class="price">{{ currentEstate?.price | number }} ₾</h2>
       <ul class="list-unstyled">
-        <li><img src="assets/location-marker.svg" alt="location"/> {{ currentEstate.city.name }}
-          , {{ currentEstate.address }}
+        <li><img src="assets/location-marker.svg" alt="location"/> {{ currentEstate?.city?.name }}
+          , {{ currentEstate?.address }}
         </li>
-        <li><img src="assets/Vector.svg" alt="area"/> ფართობი {{ currentEstate.area }}</li>
-        <li><img src="assets/bed.svg" alt="bedrooms"/> საძინებელი {{ currentEstate.bedrooms }}</li>
-        <li><img src="assets/Vector2.svg" alt="zip code"/> საფოსტო ინდექსი {{ currentEstate.zip_code }}</li>
+        <li><img src="assets/Vector.svg" alt="area"/> ფართობი {{ currentEstate?.area }}</li>
+        <li><img src="assets/bed.svg" alt="bedrooms"/> საძინებელი {{ currentEstate?.bedrooms }}</li>
+        <li><img src="assets/Vector2.svg" alt="zip code"/> საფოსტო ინდექსი {{ currentEstate?.zip_code }}</li>
       </ul>
-      <p class="property-description">{{ currentEstate.description }}</p>
+      <p class="property-description">{{ currentEstate?.description }}</p>
       <div class="agent">
         <div class="agent-header">
-          <img src="{{currentEstate.agent.avatar}}" alt="agent name is {{currentEstate.agent.name}}">
+          <img src="{{currentEstate?.agent?.avatar}}" alt="agent name is {{currentEstate?.agent?.name}}">
           <div class="agent-name">
-            <h3>{{ currentEstate.agent.name }} {{ currentEstate.agent.surname }}</h3>
+            <h3>{{ currentEstate?.agent?.name }} {{ currentEstate?.agent?.surname }}</h3>
             <p>აგენტი</p>
           </div>
         </div>
 
         <div class="agent-footer">
-          <span><img src="assets/email.svg" alt="email"/> {{ currentEstate.agent.email }}</span>
-          <span><img src="assets/mobile.svg" alt="mobile"/> {{ currentEstate.agent.phone }}</span>
+          <span><img src="assets/email.svg" alt="email"/> {{ currentEstate?.agent?.email }}</span>
+          <span><img src="assets/mobile.svg" alt="mobile"/> {{ currentEstate?.agent?.phone }}</span>
         </div>
       </div>
 
-        <button class="delete-btn">ლისტინგის წაშლა</button>
+      <button class="delete-btn">ლისტინგის წაშლა</button>
     </div>
   </div>
 
   <!--  <button routerLink="/property/15"> {{id | number}}</button>-->
 </main>
+<div class="similar-estates">
+  <h2>ბინები მსგავს ლოკაციაზე</h2>
+
+  <p-carousel
+    [value]="similarEstates"
+    [numVisible]="4"
+    [numScroll]="2"
+    [circular]="true"
+    [responsiveOptions]="responsiveOptions"
+    [showIndicators]="false"
+
+    autoplayInterval="10000"
+    styleClass="custom-carousel">
+
+    <ng-template let-product pTemplate="item">
+      <div class="product-item surface-border m-0 p-0">
+          <app-estate-card [cardInfo]="product" (click)="navigateToLink(product?.id)"></app-estate-card>
+      </div>
+    </ng-template>
+  </p-carousel>
+</div>
+

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Subscription} from "rxjs";
 import {FormBuilder, FormArray, FormControl} from "@angular/forms";
@@ -31,6 +31,7 @@ export interface EstateProps {
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
+  encapsulation: ViewEncapsulation.Emulated
 })
 export class HomeComponent implements OnInit, OnDestroy {
   // agent modal
@@ -75,16 +76,13 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.regions = res;
         this.loadSavedFilters();
       }, error => {
-        console.log(error)
       });
 
     this.subscription = this.realEstatesService.realEstatesGet().subscribe(data => {
       this.realEstates = data.body;
       this.chengableEstates = data.body;
-      console.log(this.realEstates)
       this.onSubmit();
     }, error => {
-      console.log(error)
     })
   }
 
@@ -133,7 +131,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   deleteBedrooms() {
     const bedrooms = (this.myForm.get('bedrooms') as FormArray);
-    console.log(bedrooms)
     localStorage.removeItem('selectedBedrooms')
     bedrooms.reset();
     this.littleBedrooms = undefined;
@@ -156,7 +153,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (savedRegions) {
       const parsedRegions = JSON.parse(savedRegions) as string[];
       this.getNameId(+parsedRegions[0]);
-      console.log(savedRegions)
       parsedRegions.forEach(regionId => {
 
         this.selectedRegionsFormArray.push(new FormControl(regionId));
@@ -314,13 +310,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   // filter by one
   onSubmit() {
-    console.log(this.myForm);
     if (!Array.isArray(this.realEstates)) {
-      console.error("realEstates is not an array");
       this.realEstates = null;
       return;
-    } else {
-      console.log('not loading');
     }
 
     // Get values from the form
@@ -378,7 +370,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     // Update the chengableEstates array with the filtered results
     this.chengableEstates = changedArray;
 
-    console.log(selectedRegions);
   }
 
   onHandleClose() {

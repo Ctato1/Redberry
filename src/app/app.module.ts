@@ -19,6 +19,9 @@ import {MessageService} from "primeng/api";
 import {ToastModule} from "primeng/toast";
 import { EstateCardComponent } from './home/estate-card/estate-card.component';
 import { NumberConverterPipe } from './shared/pipes/number-converter.pipe';
+import {CarouselModule} from "primeng/carousel";
+import {ButtonModule} from "primeng/button";
+import {TagModule} from "primeng/tag";
 
 @NgModule({
   declarations: [
@@ -41,6 +44,9 @@ import { NumberConverterPipe } from './shared/pipes/number-converter.pipe';
     InputTextModule,
     DropdownModule,
     ToastModule,
+    CarouselModule,
+    ButtonModule,
+    TagModule
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]

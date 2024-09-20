@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AgentsService} from "../../apimodels";
 import {MessageService} from "primeng/api";
@@ -6,7 +6,8 @@ import {MessageService} from "primeng/api";
 @Component({
   selector: 'app-add-agent',
   templateUrl: './add-agent.component.html',
-  styleUrl: './add-agent.component.css'
+  styleUrl: './add-agent.component.css',
+  encapsulation: ViewEncapsulation.Emulated
 })
 export class AddAgentComponent implements OnInit {
   @Input() message!: string | null | any;

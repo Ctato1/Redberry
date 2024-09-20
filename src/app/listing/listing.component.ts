@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AgentProps, CitiesProps, RegionProps} from "../shared/filter.service";
 import {AgentsService, GeographicalInformationService, RealEstatesService} from "../apimodels";
@@ -7,7 +7,8 @@ import {MessageService} from "primeng/api";
 @Component({
   selector: 'app-listing',
   templateUrl: './listing.component.html',
-  styleUrl: './listing.component.css'
+  styleUrl: './listing.component.css',
+  encapsulation: ViewEncapsulation.Emulated
 })
 
 export class ListingComponent implements OnInit {

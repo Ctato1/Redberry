@@ -216,8 +216,38 @@
   }
 
 }
+
+.similar-estates{
+  width: 100%;
+  max-width: 1700px;
+  margin: 67px auto;
+  padding: 0 0 0 30px;
+}
+.similar-estates h2{
+  margin-bottom: 52px;
+  margin-left: 40px;
+}
+
+.product-item{
+  width: 287px;
+}
+
+
+.product-item {
+  max-width: 400px; /* Set a maximum width for better scaling */
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+
+
 @media (max-width: 426px){
   .property-image {
-    width: 290px;
+    width: 190px;
+  }
+
+  .similar-estates{
+    width: 90%;
   }
 }

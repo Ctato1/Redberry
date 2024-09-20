@@ -5,8 +5,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class NumberConverterPipe implements PipeTransform {
 
-  transform(value: number, ...args: unknown[]): unknown {
-    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  transform(value: number | undefined, ...args: unknown[]): unknown {
+    return value?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   }
 
 }

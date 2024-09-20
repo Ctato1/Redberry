@@ -23,6 +23,7 @@ import {CarouselModule} from "primeng/carousel";
 import {ButtonModule} from "primeng/button";
 import {TagModule} from "primeng/tag";
 import { DeleteModalComponent } from './shared/delete-modal/delete-modal.component';
+import {ProgressSpinnerModule} from "primeng/progressspinner";
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { DeleteModalComponent } from './shared/delete-modal/delete-modal.compone
     ToastModule,
     CarouselModule,
     ButtonModule,
-    TagModule
+    TagModule,
+    ProgressSpinnerModule
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]

@@ -14,6 +14,7 @@ import {MessageService} from "primeng/api";
 export class ListingComponent implements OnInit {
   types = [{name: 'იყიდება', value: false}, {name: 'ქირავდება', value: true}]; // Listing types
   listingForm!: FormGroup; // Main form group
+  loading:boolean = false;
 
   // Dropdown data
   regions: RegionProps[] = [];
@@ -171,6 +172,7 @@ export class ListingComponent implements OnInit {
   // Submit form and send data to the server
   onSubmit() {
     if (!this.listingForm.valid) return;
+    this.loading = true;
 
     const formData = this.listingForm.value;
 
@@ -184,6 +186,8 @@ export class ListingComponent implements OnInit {
         styleClass: 'my-custom-error',
         life: 3000
       });
+      this.loading = false;
+
       return;
     }
 
@@ -200,6 +204,7 @@ export class ListingComponent implements OnInit {
         styleClass: 'my-custom-error',
         life: 3000
       });
+      this.loading = false;
       return;
     }
 
@@ -214,6 +219,7 @@ export class ListingComponent implements OnInit {
             styleClass: 'my-custom-success',
             life: 3000
           });
+          this.loading = false;
           this.onReset();
         }
       },
@@ -226,6 +232,7 @@ export class ListingComponent implements OnInit {
             styleClass: 'my-custom-error',
             life: 3000
           });
+          this.loading = false;
         } else {
           this.messageService.add({
             severity: 'error',
@@ -234,6 +241,7 @@ export class ListingComponent implements OnInit {
             styleClass: 'my-custom-error',
             life: 3000
           });
+          this.loading = false;
         }
 
 

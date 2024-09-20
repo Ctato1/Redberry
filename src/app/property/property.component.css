@@ -18,7 +18,9 @@
   flex-wrap: wrap;
   gap: 68px;
 }
-
+.property-info{
+  width: 40%;
+}
 /* main image */
 .image-info p {
   margin-top: 11px;

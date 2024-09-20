@@ -25,6 +25,13 @@
   color: #021526;
   font-size: 14px;
 }
+.full-width-spinner,
+.p-progress-spinner {
+  width: 100% !important;
+  display:flex !important;
+  margin: 0 auto !important;
+  background: #000;
+}
 
 
 /* main */

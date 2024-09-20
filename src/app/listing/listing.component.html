@@ -14,8 +14,15 @@
       <h2 class="text-center main-linting-title">ლისტინგის დამატება</h2>
     </div>
   </div>
+  <p-progressSpinner
+    *ngIf="loading"
+    styleClass="full-width-spinner"
+    strokeWidth="8"
+    fill="var(--surface-ground)"
+    animationDuration=".5s" />
 
-  <form [formGroup]="listingForm" (ngSubmit)="onSubmit()">
+
+  <form [formGroup]="listingForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
     <h5>გარიგების ტიპი</h5>
     <div class="radio-section">
       <label *ngFor="let type of types">

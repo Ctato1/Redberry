@@ -307,9 +307,11 @@ section ul h2 {
   }
 }
 @media (max-width: 1300px) {
+
   .real-estate-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .filter .filter-button:nth-child(2) ,
   .filter .filter-button:nth-child(3),
   .filter .filter-button:nth-child(4){
@@ -318,6 +320,7 @@ section ul h2 {
 }
 
 @media (max-width: 768px) {
+
   .main-section {
     flex-direction: column;
   }
@@ -326,9 +329,7 @@ section ul h2 {
     width: 380px;
   }
 
-  .real-estate-grid {
-    grid-template-columns: repeat(1, 1fr);
-  }
+
 
   .region-details {
     width: fit-content;
@@ -348,6 +349,21 @@ section ul h2 {
   .bedroom-details {
     width: 300px;
     margin-left: 0px;
+  }
+
+  .estates-section {
+    width: 100%;
+    max-width: 1596px;
+    margin: 41px auto;
+  }
+  .real-estate-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .estates-section {
+    width: 100%;
+    max-width: 100%;
+    margin: 41px auto;
+    padding: 0 20px;
   }
 
 }

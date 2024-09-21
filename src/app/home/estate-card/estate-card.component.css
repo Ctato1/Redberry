@@ -43,6 +43,7 @@
 .card-details {
   margin-top: 20px;
   display: flex;
+  flex-wrap:wrap;
   gap: 32px;
 }
 
@@ -80,16 +81,18 @@
   letter-spacing: 0.48px;
 }
 
-@media (max-width: 769px) {
+@media (max-width: 778px) {
   .card {
-    width: 284px;
-    height: 355px;
+    width: 250px;
+    height: 350px;
     z-index: -1;
     border-radius: 14px;
     color: rgba(2, 21, 38, 0.70);
     font-size: 16px;
-    font-weight: 400;
-    position: relative;
+  }
+  .card-details {
+    margin-top: 5px;
+    gap: 15px;
   }
 
   .card .card-image {
@@ -100,14 +103,21 @@
 }
 @media (max-width: 450px) {
   .card {
-    width: 194px;
-    height: 265px;
+    width: 154px;
+    height: 300px;
     z-index: -1;
     border-radius: 14px;
     color: rgba(2, 21, 38, 0.70);
     font-size: 16px;
-    font-weight: 400;
-    position: relative;
+  }
+  .card-details {
+    margin-top: 3px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  card-details image {
+    width: 10px;
+    height: 10px;
   }
 
   .card .card-image {

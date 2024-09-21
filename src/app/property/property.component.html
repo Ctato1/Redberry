@@ -38,7 +38,7 @@
 
         <div class="agent-footer">
           <span><img src="assets/email.svg" alt="email"/> {{ currentEstate?.agent?.email }}</span>
-          <span><img src="assets/mobile.svg" alt="mobile"/> {{ currentEstate?.agent?.phone }}</span>
+          <span><img src="assets/mobile.svg" alt="mobile"/> {{ +currentEstate?.agent?.phone | numberConverter }}</span>
         </div>
       </div>
 

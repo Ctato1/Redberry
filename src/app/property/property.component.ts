@@ -1,10 +1,10 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
-import { Location } from "@angular/common";
-import { EstateGetProps, RealEstatesService } from "../apimodels";
-import { EstateProps } from "../home/home.component";
-import { Observable, forkJoin } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
+import {ActivatedRoute, Router} from "@angular/router";
+import {Location} from "@angular/common";
+import {EstateGetProps, RealEstatesService} from "../apimodels";
+import {EstateProps} from "../home/home.component";
+import {Observable, forkJoin} from 'rxjs';
+import {catchError, switchMap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-property',
@@ -14,36 +14,40 @@ import { catchError, switchMap } from 'rxjs/operators';
 })
 export class PropertyComponent implements OnInit {
   id: string | null = null;
-  showModal!:null | number;
+  showModal!: null | number;
   currentEstate!: EstateGetProps;
   similarEstates: EstateProps[] = [];
   responsiveOptions: { breakpoint: string, numVisible: number, numScroll: number }[] = [];
+
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private realEstatesService: RealEstatesService,
     private router: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.setupResponsiveOptions(); // Centralized responsive options
     this.handleRouteChanges(); // Handle route changes and fetch data
   }
 
-  showDeleteModal(){
+  showDeleteModal() {
     this.showModal = 1;
   }
-  onHandleModal(){
+
+  onHandleModal() {
     this.showModal = null;
   }
 
   // Setup responsive options
   setupResponsiveOptions(): void {
     this.responsiveOptions = [
-      { breakpoint: '1199px', numVisible: 2, numScroll: 1 },
-      { breakpoint: '991px', numVisible: 2, numScroll: 1 },
-      { breakpoint: '767px', numVisible: 1, numScroll: 1 }
+      {breakpoint: '1920px', numVisible: 4, numScroll: 1},
+      {breakpoint: '1199px', numVisible: 2, numScroll: 1},
+      {breakpoint: '991px', numVisible: 2, numScroll: 1},
+      {breakpoint: '767px', numVisible: 1, numScroll: 1}
     ];
   }
 
@@ -61,6 +65,7 @@ export class PropertyComponent implements OnInit {
 
           // Fetch current estate and similar estates together
           return this.fetchEstateData(Number(this.id));
+
         }),
         catchError(error => {
           console.error('Error handling route changes:', error);
@@ -72,7 +77,8 @@ export class PropertyComponent implements OnInit {
   }
 
   // Fetch both the current estate and similar estates
-  fetchEstateData(id: number): Observable<void> {
+  fetchEstateData(id: number):
+    Observable<void> {
     return forkJoin([
       this.realEstatesService.realEstatesIdGet(id),
       this.realEstatesService.realEstatesGet()
@@ -97,27 +103,36 @@ export class PropertyComponent implements OnInit {
   }
 
   // Filter similar estates by region
-  filterSimilarEstates(allEstates: EstateProps[]): void {
-    if (!this.currentEstate || !this.currentEstate.city) {
+  filterSimilarEstates(allEstates: EstateProps[]):
+    void {
+    if (!
+      this.currentEstate || !this.currentEstate.city
+    ) {
       return;
     }
 
-    this.similarEstates = allEstates.filter(
-      (item: EstateProps) => item.city && item.city.region_id === this.currentEstate.city.region_id
-    );
+    const filterByRegions = allEstates.filter(
+      (item: EstateProps) => item.city.region_id === this.currentEstate.city.region_id
+    )
+    this.similarEstates = filterByRegions.filter((item: any) => item.id !== +this.id)
   }
 
   // Navigate back to the previous page
-  goBack(): void {
+  goBack()
+    :
+    void {
     this.location.back();
   }
 
   // Navigate to the home page
-  navigateToHome(): void {
+  navigateToHome()
+    :
+    void {
     this.router.navigate(['/']);
   }
-  navigateToLink(id:number){
-    window.scrollTo(0,0);
+
+  navigateToLink(id: number) {
+    window.scrollTo(0, 0);
     this.router.navigate([`/property/${id}`]);
   }
 }

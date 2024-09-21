@@ -19,7 +19,7 @@
   gap: 68px;
 }
 .property-info{
-  width: 40%;
+  width: 503px;
 }
 /* main image */
 .image-info p {
@@ -87,6 +87,7 @@
 
 /* agent */
 .agent {
+  flex-wrap:wrap;
   border-radius: 8px;
   border: 1px solid #DBDBDB;
   padding: 24px 20px;
@@ -251,5 +252,11 @@
 
   .similar-estates{
     width: 90%;
+  }
+  .property-info{
+    width: 100%;
+  }
+  .agent-name h3{
+    font-size:.9rem;
   }
 }

@@ -221,6 +221,10 @@
 
   <!-- loading -->
   <ul *ngIf="realEstates === null"  class="list-unstyled">
-    <li> Loading </li>
+    <p-progressSpinner
+      styleClass="full-width-spinner"
+      strokeWidth="8"
+      fill="var(--surface-ground)"
+      animationDuration=".5s" />
   </ul>
 </section>

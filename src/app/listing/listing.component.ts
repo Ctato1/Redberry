@@ -210,7 +210,7 @@ export class ListingComponent implements OnInit {
 
     // Submit the data to the real estate service
     this.realEstatesService.postEstates(
-      address, image, region.id, description, city.id, zip, price, area, bedroom, formData.types.value, agent.id
+      address, image, region.id, description, city.id, zip, price, area, bedroom, formData.types, agent.id
     ).subscribe(
       (event) => {
         if (event.type === 4) { // Handle final response event
